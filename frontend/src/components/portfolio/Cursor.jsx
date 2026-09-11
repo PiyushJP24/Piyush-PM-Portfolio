@@ -41,7 +41,7 @@ export default function Cursor() {
         <motion.div
             data-testid="custom-cursor"
             aria-hidden="true"
-            className="pointer-events-none fixed left-0 top-0 z-[9999]"
+            className={`pointer-events-none fixed left-0 top-0 z-[9999] ${label ? "" : "mix-blend-difference"}`}
             style={{ x: sx, y: sy, opacity: visible ? 1 : 0 }}
         >
             <div className="-translate-x-1/2 -translate-y-1/2">
@@ -65,7 +65,7 @@ export default function Cursor() {
                             animate={{ scale: 1 }}
                             exit={{ scale: 0.4 }}
                             transition={{ duration: 0.15 }}
-                            className="h-3 w-3 rounded-full bg-ink"
+                            className="h-3 w-3 rounded-full bg-white"
                         />
                     )}
                 </AnimatePresence>
