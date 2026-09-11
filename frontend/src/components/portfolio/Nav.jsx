@@ -1,4 +1,6 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const links = [
     ["About", "#about", "nav-link-about"],
@@ -17,11 +19,16 @@ export function scrollToHash(e, hash) {
     }
     const el = document.querySelector(hash);
     if (!el) return;
-    if (window.__lenis) window.__lenis.scrollTo(el, { offset: -12 });
+    if (window.__lenis) window.__lenis.scrollTo(el, { offset: -96 });
     else el.scrollIntoView({ behavior: "smooth" });
 }
 
 export default function Nav() {
+    const [open, setOpen] = useState(false);
+    const go = (e, hash) => {
+        setOpen(false);
+        scrollToHash(e, hash);
+    };
     return (
         <motion.header
             initial={{ y: -70, opacity: 0 }}
@@ -31,11 +38,11 @@ export default function Nav() {
         >
             <nav
                 data-testid="main-nav"
-                className="flex items-center gap-5 rounded-full border border-line bg-cream/85 px-5 py-2.5 shadow-[0_10px_30px_-14px_rgba(34,38,31,0.3)] backdrop-blur-md md:gap-7"
+                className="relative flex w-full items-center justify-between gap-5 rounded-full border border-line bg-cream/85 px-5 py-2.5 shadow-[0_10px_30px_-14px_rgba(34,38,31,0.3)] backdrop-blur-md md:w-auto md:justify-start md:gap-7"
             >
                 <a
                     href="#home"
-                    onClick={(e) => scrollToHash(e, "#home")}
+                    onClick={(e) => go(e, "#home")}
                     data-cursor="Home"
                     data-testid="nav-logo"
                     className="font-script text-2xl leading-none text-ink"
@@ -48,7 +55,7 @@ export default function Nav() {
                         <a
                             key={hash}
                             href={hash}
-                            onClick={(e) => scrollToHash(e, hash)}
+                            onClick={(e) => go(e, hash)}
                             data-testid={testid}
                             className="sweep text-sm font-medium text-fog transition-colors hover:text-ink"
                         >
@@ -58,13 +65,56 @@ export default function Nav() {
                 </div>
                 <a
                     href="#connect"
-                    onClick={(e) => scrollToHash(e, "#connect")}
+                    onClick={(e) => go(e, "#connect")}
                     data-cursor="Say Hello"
                     data-testid="nav-connect-button"
-                    className="rounded-full bg-forest px-4 py-1.5 text-sm font-medium text-cream transition-colors duration-300 hover:bg-ink"
+                    className="hidden rounded-full bg-forest px-4 py-1.5 text-sm font-medium text-cream transition-colors duration-300 hover:bg-ink md:block"
                 >
                     Let&rsquo;s Connect
                 </a>
+                <button
+                    type="button"
+                    onClick={() => setOpen((v) => !v)}
+                    data-cursor="Menu"
+                    data-testid="nav-menu-button"
+                    aria-label={open ? "Close menu" : "Open menu"}
+                    aria-expanded={open}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-line bg-panel/70 text-ink md:hidden"
+                >
+                    {open ? <X size={16} /> : <Menu size={16} />}
+                </button>
+                <AnimatePresence>
+                    {open && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                            data-testid="mobile-nav-panel"
+                            className="absolute inset-x-0 top-[calc(100%+10px)] flex flex-col gap-1 rounded-3xl border border-line bg-cream/95 p-3 shadow-[0_24px_50px_-18px_rgba(34,38,31,0.4)] backdrop-blur-md md:hidden"
+                        >
+                            {links.map(([label, hash, testid]) => (
+                                <a
+                                    key={hash}
+                                    href={hash}
+                                    onClick={(e) => go(e, hash)}
+                                    data-testid={`mobile-${testid}`}
+                                    className="rounded-2xl px-4 py-3 text-sm font-medium text-ink transition-colors hover:bg-panel"
+                                >
+                                    {label}
+                                </a>
+                            ))}
+                            <a
+                                href="#connect"
+                                onClick={(e) => go(e, "#connect")}
+                                data-testid="mobile-nav-connect-button"
+                                className="mt-1 rounded-2xl bg-forest px-4 py-3 text-center text-sm font-medium text-cream"
+                            >
+                                Let&rsquo;s Connect
+                            </a>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
         </motion.header>
     );

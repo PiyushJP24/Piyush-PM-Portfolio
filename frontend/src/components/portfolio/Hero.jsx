@@ -19,7 +19,6 @@ function MaskedLine({ children, delay, className }) {
 }
 
 const pills = [
-    { label: "Available for Work", dot: true, cls: "top-[13vh] right-[5vw]", rot: "2deg", delay: 1.05, hide: false, testid: "pill-available" },
     { label: "MBA × Engineering", dot: false, cls: "top-[24vh] right-[36vw]", rot: "-3deg", delay: 1.2, hide: true, testid: "pill-mba" },
     { label: "Ships with AI, not hype", dot: false, cls: "bottom-[24vh] right-[4vw]", rot: "2.5deg", delay: 1.35, hide: true, testid: "pill-ai" },
 ];

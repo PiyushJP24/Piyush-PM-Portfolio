@@ -35,16 +35,11 @@ export default function App() {
     }, []);
 
     useEffect(() => {
-        const mq = window.matchMedia("(min-width: 768px)");
         const rm = window.matchMedia("(prefers-reduced-motion: reduce)");
-        const update = () => setCurtain(mq.matches && !rm.matches);
+        const update = () => setCurtain(!rm.matches);
         update();
-        mq.addEventListener("change", update);
         rm.addEventListener("change", update);
-        return () => {
-            mq.removeEventListener("change", update);
-            rm.removeEventListener("change", update);
-        };
+        return () => rm.removeEventListener("change", update);
     }, []);
 
     useEffect(() => {

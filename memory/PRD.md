@@ -23,7 +23,8 @@ Personal portfolio for a Product Manager (Piyush Jairam Paliwal). React + Tailwi
 - Projects: 4 placeholder PM case cards (SupportPilot, OpsFlow, Pulseboard, DormEats) with status tags, P→J→O copy, banner placeholders, hover lift + shadow
 - Experience: quiet numbered list (MBA, PM internship, SWE, B.Tech)
 - Tools & Frameworks: tool tags, How I Think grid (6 frameworks w/ applied examples), also-fluent row, 3 supporting-analysis cards with sweep links
-- Footer: curtain reveal (fixed-behind + measured margin, desktop only), scroll-progress-staggered content, email pill, light circle-reveal resume button, social sweep links, back-to-top
+- Footer: curtain reveal (fixed-behind + measured margin, all viewports), scroll-progress-staggered content, email pill, light circle-reveal resume button, social sweep links, back-to-top
+- Fixes (2026-07-11): nav scroll-margin so anchored sections always land below the floating nav; mobile hamburger menu with all links + Connect; curtain reveal enabled on mobile; "Available for Work" pill removed from hero
 - Grain overlay, custom scrollbar, reduced-motion support throughout
 
 ## Placeholders to swap (user follow-up)

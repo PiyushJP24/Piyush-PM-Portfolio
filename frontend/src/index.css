@@ -97,6 +97,11 @@ code {
 }
 .drift { animation: drift 6s ease-in-out infinite; }
 
+/* Anchor targets always land below the floating nav */
+section[id] {
+    scroll-margin-top: 6.5rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .drift, .marquee-track { animation: none !important; }
 }
