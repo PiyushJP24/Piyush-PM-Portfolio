@@ -5,7 +5,7 @@ const EASE = [0.22, 1, 0.36, 1];
 
 function MaskedLine({ children, delay, className }) {
     return (
-        <span className="block overflow-hidden pb-[0.09em] -mb-[0.09em]">
+        <span className="-mb-[0.09em] -mt-[0.08em] block overflow-hidden pb-[0.09em] pt-[0.08em]">
             <motion.span
                 className={`block ${className}`}
                 initial={{ y: "115%" }}
@@ -19,8 +19,8 @@ function MaskedLine({ children, delay, className }) {
 }
 
 const pills = [
-    { label: "MBA × Engineering", dot: false, cls: "top-[24vh] right-[36vw]", rot: "-3deg", delay: 1.2, hide: true, testid: "pill-mba" },
-    { label: "Ships with AI, not hype", dot: false, cls: "bottom-[24vh] right-[4vw]", rot: "2.5deg", delay: 1.35, hide: true, testid: "pill-ai" },
+    { label: "MBA × Engineering", cls: "top-[11vh] right-[4vw] md:top-[24vh] md:right-[36vw]", rot: "-3deg", delay: 1.2, testid: "pill-mba" },
+    { label: "Ships with AI, not hype", cls: "bottom-[34vh] left-[5vw] md:bottom-[24vh] md:left-auto md:right-[4vw]", rot: "2.5deg", delay: 1.35, testid: "pill-ai" },
 ];
 
 export default function Hero() {
@@ -39,7 +39,7 @@ export default function Hero() {
             </motion.div>
 
             {/* Layer 3a — headline text behind character, 1x scroll */}
-            <div className="absolute left-[6vw] top-[15vh] z-20">
+            <div className="absolute left-[6vw] top-[19vh] z-20 md:top-[15vh]">
                 <MaskedLine delay={0.15} className="text-base font-medium text-ink/70 md:text-xl">
                     Hey I&rsquo;m a
                 </MaskedLine>
@@ -82,7 +82,7 @@ export default function Hero() {
             {pills.map((p) => (
                 <div
                     key={p.testid}
-                    className={`drift absolute z-40 ${p.cls} ${p.hide ? "hidden md:block" : ""}`}
+                    className={`drift absolute z-40 ${p.cls}`}
                     style={{ "--rot": p.rot, animationDelay: `${p.delay}s` }}
                 >
                     <motion.div
