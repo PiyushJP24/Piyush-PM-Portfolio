@@ -1,0 +1,77 @@
+import { motion } from "framer-motion";
+import SectionHead from "./SectionHead";
+import ResumeButton from "./ResumeButton";
+
+const facts = [
+    ["Based in", "Bengaluru, India"],
+    ["Currently", "MBA, Business Analytics"],
+    ["Looking for", "APM / Product Manager roles"],
+];
+
+export default function About() {
+    return (
+        <section id="about" data-testid="about-section" className="mx-auto max-w-6xl px-6 py-28 md:py-36">
+            <div className="grid items-center gap-14 md:grid-cols-[5fr_6fr]">
+                <motion.figure
+                    initial={{ opacity: 0, y: 32 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    className="group relative overflow-hidden rounded-[2rem] border border-line bg-panel"
+                    data-cursor="That's me"
+                >
+                    <img
+                        src="/assets/portrait.png"
+                        alt="Portrait of Piyush Jairam Paliwal"
+                        data-testid="about-photo"
+                        className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                    <figcaption className="absolute inset-x-0 bottom-0 translate-y-4 bg-gradient-to-t from-ink/75 to-transparent p-5 pt-14 text-sm text-cream opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+                        Placeholder portrait — the real photo is still in editing.
+                    </figcaption>
+                </motion.figure>
+
+                <div>
+                    <SectionHead
+                        no="01"
+                        kicker="About"
+                        title={
+                            <>
+                                An engineer&rsquo;s toolkit,
+                                <br />a PM&rsquo;s{" "}
+                                <span className="font-serifit font-normal italic text-forest">judgment.</span>
+                            </>
+                        }
+                    />
+                    <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.4 }}
+                        transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                        <p className="mt-6 text-sm leading-relaxed text-ink/80 md:text-base">
+                            I&rsquo;m Piyush Jairam Paliwal — an MBA candidate with an engineering degree, and the kind
+                            of PM who would rather prototype the idea than schedule a meeting about it.
+                        </p>
+                        <p className="mt-4 text-sm leading-relaxed text-ink/80 md:text-base">
+                            I build AI-native products end to end: user interviews, PRDs, and working prototypes wired
+                            up with LLMs and automation tooling. Currently looking for APM / Product Manager roles
+                            where judgment matters more than Jira theatre.
+                        </p>
+                        <dl className="mt-8">
+                            {facts.map(([k, v]) => (
+                                <div key={k} className="flex items-baseline justify-between gap-6 border-t border-line py-3 text-sm">
+                                    <dt className="text-fog">{k}</dt>
+                                    <dd className="text-right font-medium text-ink">{v}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                        <div className="mt-8">
+                            <ResumeButton testid="view-resume-button-about" />
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
+}

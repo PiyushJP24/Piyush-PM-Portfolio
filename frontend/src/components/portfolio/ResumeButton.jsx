@@ -1,0 +1,17 @@
+import { ArrowUpRight } from "lucide-react";
+
+export default function ResumeButton({ light = false, testid = "view-resume-button", className = "" }) {
+    return (
+        <a
+            href="#"
+            onClick={(e) => e.preventDefault()}
+            data-cursor="Resume"
+            data-testid={testid}
+            className={`btn-circle ${light ? "light border-cream/40 text-cream" : "border-ink/25 text-ink"} inline-flex items-center gap-3 rounded-full border py-3.5 pl-11 pr-8 text-sm font-medium tracking-wide ${className}`}
+        >
+            <span className="fill-dot" aria-hidden="true" />
+            <span className="btn-label relative">View Resume</span>
+            <ArrowUpRight size={15} className="btn-label relative" aria-hidden="true" />
+        </a>
+    );
+}
