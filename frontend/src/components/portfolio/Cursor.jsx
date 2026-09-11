@@ -41,7 +41,7 @@ export default function Cursor() {
         <motion.div
             data-testid="custom-cursor"
             aria-hidden="true"
-            className="pointer-events-none fixed left-0 top-0 z-[9999] mix-blend-difference"
+            className="pointer-events-none fixed left-0 top-0 z-[9999]"
             style={{ x: sx, y: sy, opacity: visible ? 1 : 0 }}
         >
             <div className="-translate-x-1/2 -translate-y-1/2">
@@ -53,7 +53,7 @@ export default function Cursor() {
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.5, opacity: 0 }}
                             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                            className="flex items-center gap-1.5 whitespace-nowrap rounded-full bg-white py-1.5 pl-3.5 pr-3 text-xs font-semibold text-black"
+                            className="flex items-center gap-1.5 whitespace-nowrap rounded-full bg-ink py-1.5 pl-3.5 pr-3 text-xs font-semibold text-cream shadow-[0_12px_28px_-8px_rgba(34,38,31,0.55)]"
                         >
                             {label}
                             <ArrowUpRight size={13} />
@@ -65,7 +65,7 @@ export default function Cursor() {
                             animate={{ scale: 1 }}
                             exit={{ scale: 0.4 }}
                             transition={{ duration: 0.15 }}
-                            className="h-3 w-3 rounded-full bg-white"
+                            className="h-3 w-3 rounded-full bg-ink"
                         />
                     )}
                 </AnimatePresence>
