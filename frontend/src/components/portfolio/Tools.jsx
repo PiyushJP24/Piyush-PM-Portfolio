@@ -111,12 +111,12 @@ export default function Tools() {
                             <div
                                 key={a.title}
                                 data-testid={`analysis-project-${i}`}
-                                className="overflow-hidden rounded-2xl border border-line bg-panel/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-16px_rgba(34,38,31,0.22)]"
+                                className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-panel/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-16px_rgba(34,38,31,0.22)]"
                             >
-                                <div className="overflow-hidden">
-                                    <img src={a.banner} alt={`${a.title} banner`} className="block h-auto w-full" />
+                                <div className="aspect-[16/10] overflow-hidden">
+                                    <img src={a.banner} alt={`${a.title} banner`} className="h-full w-full object-contain" />
                                 </div>
-                                <div className="p-6">
+                                <div className="flex flex-1 flex-col p-6">
                                     <h4 className="text-base font-semibold text-ink">{a.title}</h4>
                                     <p className="mt-2 text-sm leading-relaxed text-fog">{a.caption}</p>
                                     <div className="mt-4 flex flex-wrap gap-2">
@@ -126,18 +126,20 @@ export default function Tools() {
                                             </span>
                                         ))}
                                     </div>
-                                    <a
-                                        href={a.link}
-                                        onClick={(e) => {
-                                            if (a.link === "#") e.preventDefault();
-                                        }}
-                                        data-cursor="Open"
-                                        data-testid={`analysis-project-link-${i}`}
-                                        className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-ink/20 px-4 py-2 text-xs font-medium text-ink transition-colors duration-300 hover:border-forest hover:bg-forest hover:text-cream"
-                                    >
-                                        View Project
-                                        <ArrowUpRight size={13} />
-                                    </a>
+                                    <div className="mt-auto pt-5">
+                                        <a
+                                            href={a.link}
+                                            onClick={(e) => {
+                                                if (a.link === "#") e.preventDefault();
+                                            }}
+                                            data-cursor="Open"
+                                            data-testid={`analysis-project-link-${i}`}
+                                            className="inline-flex items-center gap-1.5 rounded-full border border-ink/20 px-4 py-2 text-xs font-medium text-ink transition-colors duration-300 hover:border-forest hover:bg-forest hover:text-cream"
+                                        >
+                                            View Project
+                                            <ArrowUpRight size={13} />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         ))}
