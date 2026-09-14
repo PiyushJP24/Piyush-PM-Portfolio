@@ -113,8 +113,8 @@ export default function Tools() {
                                 data-testid={`analysis-project-${i}`}
                                 className="overflow-hidden rounded-2xl border border-line bg-panel/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-16px_rgba(34,38,31,0.22)]"
                             >
-                                <div className="aspect-[16/8] overflow-hidden">
-                                    <img src={a.banner} alt={`${a.title} banner`} className="h-full w-full object-cover" />
+                                <div className="overflow-hidden">
+                                    <img src={a.banner} alt={`${a.title} banner`} className="block h-auto w-full" />
                                 </div>
                                 <div className="p-6">
                                     <h4 className="text-base font-semibold text-ink">{a.title}</h4>
