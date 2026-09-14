@@ -3,9 +3,9 @@ import SectionHead from "./SectionHead";
 import ResumeButton from "./ResumeButton";
 
 const facts = [
-    ["Based in", "Bengaluru, India"],
-    ["Currently", "MBA, Business Analytics"],
-    ["Looking for", "APM / Product Manager roles"],
+    ["Based in", "Gurgaon, India"],
+    ["Currently", "MBA, IIM Visakhapatnam"],
+    ["Building at the intersection of", "AI products & user judgment"],
 ];
 
 export default function About() {

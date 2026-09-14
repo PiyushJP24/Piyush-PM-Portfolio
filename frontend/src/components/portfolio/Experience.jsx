@@ -9,7 +9,7 @@ export default function Experience() {
             <div className="mt-12">
                 {experience.map((e, i) => (
                     <motion.div
-                        key={e.role}
+                        key={`${e.years}-${e.org}`}
                         initial={{ opacity: 0, y: 18 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.5 }}

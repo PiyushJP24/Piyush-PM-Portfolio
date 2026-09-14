@@ -47,20 +47,24 @@ function ProjectCard({ p, i }) {
                 <h3 className="text-xl font-semibold tracking-tight text-ink md:text-2xl">{p.name}</h3>
                 <p className="mt-1.5 text-sm text-fog">{p.tag}</p>
                 <div className="mt-6 space-y-4">
-                    {blocks.map(([label, key]) => (
-                        <div key={key}>
-                            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-forest">{label}</p>
-                            <p className="mt-1 text-sm leading-relaxed text-ink/75">{p[key]}</p>
-                        </div>
-                    ))}
+                    {blocks
+                        .filter(([, key]) => p[key])
+                        .map(([label, key]) => (
+                            <div key={key}>
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-forest">{label}</p>
+                                <p className="mt-1 text-sm leading-relaxed text-ink/75">{p[key]}</p>
+                            </div>
+                        ))}
                 </div>
-                <div className="mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
-                    {p.tools.map((t) => (
-                        <span key={t} className="rounded-full border border-line bg-cream px-3 py-1 text-xs font-medium text-fog">
-                            {t}
-                        </span>
-                    ))}
-                </div>
+                {p.tools && p.tools.length > 0 && (
+                    <div className="mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
+                        {p.tools.map((t) => (
+                            <span key={t} className="rounded-full border border-line bg-cream px-3 py-1 text-xs font-medium text-fog">
+                                {t}
+                            </span>
+                        ))}
+                    </div>
+                )}
             </div>
         </motion.a>
     );
