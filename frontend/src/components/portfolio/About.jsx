@@ -21,13 +21,13 @@ export default function About() {
                     data-cursor="That's me"
                 >
                     <img
-                        src="/assets/portrait.png"
+                        src="/assets/portrait.jpg"
                         alt="Portrait of Piyush Jairam Paliwal"
                         data-testid="about-photo"
                         className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
                     <figcaption className="absolute inset-x-0 bottom-0 translate-y-4 bg-gradient-to-t from-ink/75 to-transparent p-5 pt-14 text-sm text-cream opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-                        Placeholder portrait — the real photo is still in editing.
+                        Piyush Jairam Paliwal — Product Manager.
                     </figcaption>
                 </motion.figure>
 

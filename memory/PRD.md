@@ -28,8 +28,8 @@ Personal portfolio for a Product Manager (Piyush Jairam Paliwal). React + Tailwi
 - Grain overlay, custom scrollbar, reduced-motion support throughout
 
 ## Placeholders to swap (user follow-up)
-- Email `hello@piyushpaliwal.com`, social links, project links, resume link — all `#`/dummy in `/app/frontend/src/data/content.js`
-- `/assets/portrait.png` → real photo
+- Email now piyushjp24@gmail.com; social links, project links, resume link still `#` in `/app/frontend/src/data/content.js`
+- DONE (2026-07-15): real portrait (portrait.jpg) in About; Swiggy AOV + Alfred case-study tiles now use user-provided banners (banner-swiggy.jpg, banner-alfred.jpg)
 - DONE (2026-07-14): Supporting Analysis restructured into a Projects / Visualisations pill-toggle — 2 analysis project cards (Vendor Performance, Airline Data) + 3 Tableau viz cards (Netflix Usage V3, Spotify Analysis, LLM Trends). Real user-provided images swapped in (analysis-vendor/airline.jpg, viz-netflix/spotify/llm.jpg). Tableau Public + per-card links still "#" pending URLs.
 
 ## Backlog

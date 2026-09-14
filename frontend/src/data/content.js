@@ -62,7 +62,7 @@ export const projects = [
         tone: "case",
         name: "Increasing Swiggy Instamart's AOV",
         tag: "A quick-commerce AOV problem, solved with survey data instead of guesswork.",
-        banner: "/assets/banner-2.png",
+        banner: "/assets/banner-swiggy.jpg",
         problem:
             "50% of Instamart users were ordering 5+ times a month at an average order value under ₹400 — frequent, fragmented orders were capping profitability, not pricing.",
         judgment:
@@ -76,7 +76,7 @@ export const projects = [
         tone: "case",
         name: "Alfred — AI Travel Assistant",
         tag: "Designing an AI travel planning assistant for EaseMyTrip, from JTBD to wireframe.",
-        banner: "/assets/banner-4.png",
+        banner: "/assets/banner-alfred.jpg",
         problem:
             "EaseMyTrip users plan trips across fragmented sources — Instagram for inspiration, TripAdvisor for research, separate sites for booking — with no single assistant tying it together.",
         judgment:
