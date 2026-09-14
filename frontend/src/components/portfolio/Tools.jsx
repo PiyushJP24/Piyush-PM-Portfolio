@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import SectionHead from "./SectionHead";
-import { analysis, fluentIn, frameworks, tools } from "../../data/content";
+import { analysisProjects, analysisViz, fluentIn, frameworks, tools } from "../../data/content";
 
 const rise = {
     initial: { opacity: 0, y: 24 },
@@ -11,6 +12,7 @@ const rise = {
 };
 
 export default function Tools() {
+    const [tab, setTab] = useState("projects");
     return (
         <section id="tools" data-testid="tools-section" className="mx-auto max-w-6xl px-6 py-24 pb-36 md:py-32 md:pb-44">
             <SectionHead
@@ -64,32 +66,138 @@ export default function Tools() {
             <motion.h3 {...rise} className="mt-20 text-xl font-semibold tracking-tight text-ink md:text-2xl">
                 Supporting <span className="font-serifit font-normal italic text-forest">analysis</span>
             </motion.h3>
-            <div className="mt-8 grid gap-5 md:grid-cols-3">
-                {analysis.map((a, i) => (
-                    <motion.div
-                        key={a.title}
-                        {...rise}
-                        transition={{ ...rise.transition, delay: i * 0.08 }}
-                        data-testid={`analysis-card-${i}`}
-                        className="rounded-2xl border border-line bg-panel/40 p-6"
-                    >
-                        <h4 className="text-base font-semibold text-ink">{a.title}</h4>
-                        <p className="mt-2 text-sm leading-relaxed text-fog">{a.caption}</p>
-                        <a
-                            href={a.link}
-                            onClick={(e) => {
-                                if (a.link === "#") e.preventDefault();
-                            }}
-                            data-cursor="Peek"
-                            data-testid={`analysis-link-${i}`}
-                            className="sweep mt-4 inline-flex items-center gap-1 text-sm font-medium text-forest"
+
+            <motion.div {...rise} className="mt-8">
+                <div data-testid="analysis-tabs" className="inline-flex rounded-full border border-line bg-panel p-1">
+                    {[
+                        ["projects", "Projects"],
+                        ["viz", "Visualisations"],
+                    ].map(([key, label]) => (
+                        <button
+                            key={key}
+                            type="button"
+                            onClick={() => setTab(key)}
+                            data-cursor="Switch"
+                            data-testid={`analysis-tab-${key}`}
+                            className={`relative rounded-full px-5 py-2 text-sm font-medium transition-colors duration-300 ${
+                                tab === key ? "text-cream" : "text-fog hover:text-ink"
+                            }`}
                         >
-                            View the board
-                            <ArrowUpRight size={13} />
-                        </a>
+                            {tab === key && (
+                                <motion.span
+                                    layoutId="analysis-tab-pill"
+                                    className="absolute inset-0 rounded-full bg-forest"
+                                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                                />
+                            )}
+                            <span className="relative">{label}</span>
+                        </button>
+                    ))}
+                </div>
+            </motion.div>
+
+            <AnimatePresence mode="wait">
+                {tab === "projects" ? (
+                    <motion.div
+                        key="projects"
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                        data-testid="analysis-projects-panel"
+                        className="mt-8 grid gap-6 md:grid-cols-2"
+                    >
+                        {analysisProjects.map((a, i) => (
+                            <div
+                                key={a.title}
+                                data-testid={`analysis-project-${i}`}
+                                className="overflow-hidden rounded-2xl border border-line bg-panel/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-16px_rgba(34,38,31,0.22)]"
+                            >
+                                <div className="aspect-[16/8] overflow-hidden">
+                                    <img src={a.banner} alt={`${a.title} banner`} className="h-full w-full object-cover" />
+                                </div>
+                                <div className="p-6">
+                                    <h4 className="text-base font-semibold text-ink">{a.title}</h4>
+                                    <p className="mt-2 text-sm leading-relaxed text-fog">{a.caption}</p>
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                        {a.tags.map((t) => (
+                                            <span key={t} className="rounded-full border border-line bg-cream px-3 py-1 text-xs font-medium text-fog">
+                                                {t}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <a
+                                        href={a.link}
+                                        onClick={(e) => {
+                                            if (a.link === "#") e.preventDefault();
+                                        }}
+                                        data-cursor="Open"
+                                        data-testid={`analysis-project-link-${i}`}
+                                        className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-ink/20 px-4 py-2 text-xs font-medium text-ink transition-colors duration-300 hover:border-forest hover:bg-forest hover:text-cream"
+                                    >
+                                        View Project
+                                        <ArrowUpRight size={13} />
+                                    </a>
+                                </div>
+                            </div>
+                        ))}
                     </motion.div>
-                ))}
-            </div>
+                ) : (
+                    <motion.div
+                        key="viz"
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                        data-testid="analysis-viz-panel"
+                    >
+                        <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+                            <p className="text-sm text-fog md:text-base">
+                                Explore my interactive Tableau dashboards and data visualisations
+                            </p>
+                            <a
+                                href="#"
+                                onClick={(e) => e.preventDefault()}
+                                data-cursor="Tableau"
+                                data-testid="tableau-public-link"
+                                className="inline-flex items-center gap-1.5 rounded-full bg-forest px-5 py-2.5 text-xs font-medium text-cream transition-colors duration-300 hover:bg-ink"
+                            >
+                                View All on Tableau Public
+                                <ArrowUpRight size={13} />
+                            </a>
+                        </div>
+                        <div className="mt-6 grid gap-6 md:grid-cols-3">
+                            {analysisViz.map((v, i) => (
+                                <div
+                                    key={v.title}
+                                    data-testid={`analysis-viz-${i}`}
+                                    className="overflow-hidden rounded-2xl border border-line bg-panel/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-16px_rgba(34,38,31,0.22)]"
+                                >
+                                    <div className="aspect-[16/10] overflow-hidden">
+                                        <img src={v.thumb} alt={`${v.title} thumbnail`} className="h-full w-full object-cover" />
+                                    </div>
+                                    <div className="p-5">
+                                        <h4 className="text-base font-semibold text-ink">{v.title}</h4>
+                                        <p className="mt-2 text-sm leading-relaxed text-fog">{v.caption}</p>
+                                        <a
+                                            href={v.link}
+                                            onClick={(e) => {
+                                                if (v.link === "#") e.preventDefault();
+                                            }}
+                                            data-cursor="Open"
+                                            data-testid={`analysis-viz-link-${i}`}
+                                            className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-ink/20 px-4 py-2 text-xs font-medium text-ink transition-colors duration-300 hover:border-forest hover:bg-forest hover:text-cream"
+                                        >
+                                            View Dashboard
+                                            <ArrowUpRight size={13} />
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 }

@@ -195,20 +195,40 @@ export const fluentIn = [
     "SQL",
 ];
 
-export const analysis = [
+export const analysisProjects = [
     {
-        title: "Cohort Retention Board",
-        caption: "SQL + dashboard deep-dive; the retention curve that anchors the OpsFlow case study.",
+        title: "Vendor Performance Analysis",
+        caption: "In-depth analysis of vendor- and product-level sales data for retail/wholesale optimisation — identified inefficiencies in vendor performance and opportunities for bulk purchasing strategies.",
+        tags: ["SQL", "Tableau", "Excel", "Python", "Jupyter"],
+        banner: "/assets/banner-1.png",
         link: "#",
     },
     {
-        title: "Onboarding Funnel Teardown",
-        caption: "Step-by-step drop-off analysis that shaped SupportPilot's activation flow.",
+        title: "Airline Data Analysis",
+        caption: "Operational data analysis for a regional airline — improving profit margins through aircraft-level revenue insights and occupancy optimisation strategies.",
+        tags: ["Python", "SQL", "NumPy", "EDA", "Pandas"],
+        banner: "/assets/banner-3.png",
+        link: "#",
+    },
+];
+
+export const analysisViz = [
+    {
+        title: "Netflix Usage V3",
+        caption: "Personal viewing analytics — cumulative titles watched over time, viewing hours per day, and titles-per-year breakdown.",
+        thumb: "/assets/viz-1.jpg",
         link: "#",
     },
     {
-        title: "Weekly Exec KPI Digest",
-        caption: "Automated Monday-morning metrics brief — the seed idea behind Pulseboard.",
+        title: "Spotify Music and Artist Analysis",
+        caption: "Music classification and personalisation dashboard clustering tracks by danceability, acousticness, speechiness, and instrumentalness.",
+        thumb: "/assets/viz-2.jpg",
+        link: "#",
+    },
+    {
+        title: "Impact of Large Language Models: Trends & Implications",
+        caption: "Tracks 129 LLMs across 57 owners/developers — average parameter counts, yearly release trends, and a current-leaders ranking.",
+        thumb: "/assets/viz-3.jpg",
         link: "#",
     },
 ];

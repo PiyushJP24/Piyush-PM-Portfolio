@@ -30,7 +30,7 @@ Personal portfolio for a Product Manager (Piyush Jairam Paliwal). React + Tailwi
 ## Placeholders to swap (user follow-up)
 - Email `hello@piyushpaliwal.com`, social links, project links, resume link — all `#`/dummy in `/app/frontend/src/data/content.js`
 - `/assets/portrait.png` → real photo
-- DONE (2026-07-13): real projects RepMate / DecideAI / WhyAI with user-provided banners (banner-{name}.jpg) replaced the four placeholder cards; pills now Mobile App/AI Feedback/Solo Build, Recommendation AI/RAG Pipeline/Case Study, Chrome Extension/Personalization/E-Commerce. Note: "How I Think" framework examples still reference the old placeholder project names — candidate for a copy pass.
+- DONE (2026-07-14): Supporting Analysis restructured into a Projects / Visualisations pill-toggle — 2 analysis project cards (Vendor Performance, Airline Data) + 3 Tableau viz cards (Netflix Usage V3, Spotify Analysis, LLM Trends). Placeholder thumbs (banner-1/3.png, viz-1..3.jpg generated) await real screenshots; Tableau Public + per-card links are "#" pending URLs. Old analysis mini-cards (OpsFlow/SupportPilot/Pulseboard references) removed.
 
 ## Backlog
 - P0: real content swap (photos, links, resume PDF), custom favicon/OG image
