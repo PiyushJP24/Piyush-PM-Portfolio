@@ -68,7 +68,7 @@ export const projects = [
         judgment:
             "Validated the root cause with a 40-person Tier-1 user survey before proposing anything — traced the shortfall to urgency-driven ordering and poor pantry tracking, not price sensitivity. Scored two competing solutions with an Impact×Confidence−Effort model and killed the price-comparer idea (score: −1.5) in favor of an AI restocking nudge, 'InstaRestocker' (score: 2.2), then modeled the AOV lift (₹400→₹440) against a 3-month impact map before wireframing.",
         tools: [],
-        link: "#",
+        link: "/work/instarestocker",
     },
     {
         id: "alfred",

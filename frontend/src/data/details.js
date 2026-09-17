@@ -88,6 +88,37 @@ export const detailPages = {
             "A dual RAG layer earns its complexity only when a single retrieval pass can't hold both 'what the feature does' and 'what this specific buyer cares about' at once.",
             "Targeting a specific company's PM roles (Amazon) changes what the project needs to prove — this one is built to demonstrate Amazon-specific product thinking, not general AI-PM skills.",
         ],
-        next: { note: "Up next: Increasing Swiggy Instamart's AOV — case study", href: "/#work" },
+        next: { note: "Up next: Increasing Swiggy Instamart's AOV — case study", href: "/work/instarestocker" },
+    },
+    instarestocker: {
+        slug: "instarestocker",
+        status: "Case Study",
+        titleMain: "InstaRestocker — Fixing Swiggy Instamart's",
+        titleAccent: "AOV Problem",
+        subtitle: "A quick-commerce AOV problem, solved with survey data instead of guesswork.",
+        banner: "/assets/banner-swiggy.jpg",
+        bannerAlt: "InstaRestocker case study banner",
+        overview: [
+            ["My Role", "Solo Builder — Problem Diagnosis, Solution Prioritization, System Design"],
+            ["Team", "Solo (independent case study)"],
+            ["Timeline", "Dec 2024 – Jan 2025"],
+            ["Outcome", "10% projected AOV increase (₹400 → ₹440)"],
+        ],
+        narrative:
+            "An independent case study diagnosing why 50% of Swiggy Instamart users were ordering 5+ times a month at an average order value under ₹400 — frequent, fragmented orders capping profitability, not pricing. Validated with a 40-person Tier-1 user survey before proposing anything, then designed InstaRestocker: an AI-based restocking nudge that predicts when a user's pantry is about to run out and surfaces it right at the cart.",
+        roleBullets: [
+            "Ran a 40-person Tier-1 user survey (ages 18–24) to validate two hypotheses before proposing a fix — confirmed most users have AOV under ₹400, and confirmed the root cause was urgency-based ordering and lack of pantry management, not price sensitivity",
+            "Scored two competing solutions with an Impact × Confidence − Effort model and killed a price-comparer idea (score: −1.5) in favor of InstaRestocker (score: 2.2)",
+            "Designed the prototype across both the cart page and reorder page — separate logic for perishable items (depletion-date prediction) and non-perishables (lifespan tracking)",
+            "Proposed a full system architecture — order data → behavior analysis → usage prediction model → recommendation engine → reminder notifications — with explicit constraints around post-depletion handling and data-ethics considerations",
+            "Modeled the AOV lift (₹400 → ₹440, a 10% increase) against a 3-month impact map before finalizing the pitch",
+        ],
+        stack: ["User Research", "Impact Mapping", "RICE-style Scoring", "System Design", "Figma"],
+        takeaways: [
+            "Validating the root cause with real survey data before proposing a fix meant the pitch wasn't built on an assumption — 'it's too expensive' turned out to be the wrong hypothesis; 'orders are too fragmented' was the real one.",
+            "Scoring two solutions against the same framework, not just picking the more interesting one, is what killed the price-comparer idea early instead of half-building both.",
+            "A recommendation engine isn't just a feature — it comes with real second-order effects (delivery partner compensation, data-ethics tradeoffs) that need to be designed for up front, not bolted on later.",
+        ],
+        next: { note: "Up next: Alfred — AI travel assistant case study", href: "/#work" },
     },
 };
