@@ -38,7 +38,7 @@ export const projects = [
         outcome:
             "Perfect marks on Responsible AI, metrics, and panel defence, across six cross-checked deliverables.",
         tools: ["Recommendation AI", "RAG Pipeline", "Case Study"],
-        link: "#",
+        link: "/work/decideai",
     },
     {
         id: "whyai",

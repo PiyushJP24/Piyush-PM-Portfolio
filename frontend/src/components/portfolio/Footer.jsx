@@ -28,7 +28,7 @@ function Reveal({ p, t0, t1, curtain, className, children, testid }) {
     );
 }
 
-const Footer = forwardRef(function Footer({ curtain }, ref) {
+const Footer = forwardRef(function Footer({ curtain, pathKey }, ref) {
     const { scrollY } = useScroll();
     const [range, setRange] = useState([0, 1]);
 
@@ -46,7 +46,7 @@ const Footer = forwardRef(function Footer({ curtain }, ref) {
             clearTimeout(t);
             window.removeEventListener("resize", calc);
         };
-    }, [ref, curtain]);
+    }, [ref, curtain, pathKey]);
 
     const p = useTransform(scrollY, range, [0, 1], { clamp: true });
 

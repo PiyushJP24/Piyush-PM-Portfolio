@@ -10,14 +10,15 @@ import Projects from "./components/portfolio/Projects";
 import Experience from "./components/portfolio/Experience";
 import Tools from "./components/portfolio/Tools";
 import Footer from "./components/portfolio/Footer";
-import RepmateDetail from "./components/portfolio/RepmateDetail";
+import ProjectDetail from "./components/portfolio/ProjectDetail";
+import { detailPages } from "./data/details";
 
 export default function App() {
     const footerRef = useRef(null);
     const [curtain, setCurtain] = useState(false);
     const [footerH, setFooterH] = useState(0);
     const [path, setPath] = useState(() => window.location.pathname);
-    const isDetail = path.startsWith("/work/");
+    const detail = path.startsWith("/work/") ? detailPages[path.split("/")[2]] : null;
 
     useEffect(() => {
         const onPop = () => setPath(window.location.pathname);
@@ -28,7 +29,7 @@ export default function App() {
     useEffect(() => {
         if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true });
         else window.scrollTo(0, 0);
-        if (!isDetail && window.location.hash) {
+        if (!detail && window.location.hash) {
             const t = setTimeout(() => {
                 const el = document.querySelector(window.location.hash);
                 if (!el) return;
@@ -38,7 +39,7 @@ export default function App() {
             return () => clearTimeout(t);
         }
         return undefined;
-    }, [path, isDetail]);
+    }, [path, detail]);
 
     useEffect(() => {
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -90,8 +91,8 @@ export default function App() {
                         : undefined
                 }
             >
-                {isDetail ? (
-                    <RepmateDetail />
+                {detail ? (
+                    <ProjectDetail key={detail.slug} data={detail} />
                 ) : (
                     <>
                         <Hero />
@@ -103,7 +104,7 @@ export default function App() {
                     </>
                 )}
             </main>
-            <Footer ref={footerRef} curtain={curtain} />
+            <Footer ref={footerRef} curtain={curtain} pathKey={path} />
         </MotionConfig>
     );
 }

@@ -1,0 +1,65 @@
+export const detailPages = {
+    repmate: {
+        slug: "repmate",
+        status: "Built & Shipping",
+        titleMain: "RepMate — AI Gym Buddy for",
+        titleAccent: "Indian Lifters",
+        subtitle: "A home-gym fitness app built for India — and priced for it, too.",
+        banner: "/assets/banner-repmate.jpg",
+        bannerAlt: "RepMate app banner",
+        overview: [
+            ["My Role", "Solo Product Owner — PRD Writing, 0-1 Product Development, End-to-End Build Direction"],
+            ["Team", "Solo Builder"],
+            ["Timeline", "Pre-launch, ongoing"],
+            ["Outcome", "Near Play Store submission"],
+        ],
+        narrative:
+            "Built as a mobile app for the Indian lifting community, based on firsthand knowledge of that user base. Most fitness apps in India make you piece together three or four different tools — one for workout tracking, another for calorie counting, a third for progress analytics — usually at a US-calibrated price. RepMate puts all of it in one place: a 74-exercise library across six muscle groups, a calorie counter built for the Indian market (manual food lookup plus AI photo-based logging), AI-generated workout plans that adapt to a user's own training history, and workout analytics that turn session history into visible progress — all wrapped in a premium dark theme with gold/amber and purple accents, priced at ₹299/month or ₹2,399/year against HealthifyMe and Cult.fit rather than a copied US rate.",
+        roleBullets: [
+            "Wrote the PRD as the authoritative product document — not hedged for alternative platforms",
+            "Approved nine wireframes and directed the full styling pass",
+            "Defined and shipped RepMate's 5 core functions: workout tracking with history, a calorie counter built for the Indian market, AI-generated workout plans, the exercise library, and workout analytics",
+            "Diagnosed and directed fixes for two critical launch-blocking bugs: a MongoDB ObjectId serialization error blocking authentication, and a deprecated Gemini model reference (resolved by switching to gemini-flash-latest)",
+            "Benchmarked and set pricing at ₹299/month or ₹2,399/year against HealthifyMe and Cult.fit, rather than a copied US rate",
+            "Scoped the Calorie Counter as a dual-path feature — manual food lookup for users who want precision, AI photo-based logging (capped at 8 scans/user/day) for users who want speed",
+            "Built workout Analytics as a standalone core function, not an afterthought — turning raw session history into a view of actual progress over time",
+        ],
+        stack: ["React Native / Expo", "FastAPI", "MongoDB", "Gemini", "RevenueCat", "Mixpanel"],
+        takeaways: [
+            "Owning the PRD end-to-end meant every scope decision (like capping AI photo-based calorie logging at 8 scans/user/day) had a documented reason, not just a gut call.",
+            "Pricing against direct competitors (HealthifyMe, Cult.fit) rather than assuming a US price point was a deliberate call for the Indian market.",
+            "Shipping constraints are real: resolving two launch-blocking bugs before adding the calorie counter meant sequencing fixes by what was blocking users, not by what was most interesting to build.",
+        ],
+        next: { note: "Up next: DecideAI — recommendation engine case study", href: "/work/decideai" },
+    },
+    decideai: {
+        slug: "decideai",
+        status: "Case Study — 9/10",
+        titleMain: "DecideAI — Mood-Based Content Recommendation for",
+        titleAccent: "Netflix",
+        subtitle: "A recommendation AI that ends the endless streaming scroll.",
+        banner: "/assets/banner-decideai.jpg",
+        bannerAlt: "DecideAI app banner",
+        overview: [
+            ["My Role", "Solo Builder — End-to-End Pipeline Design, Architecture Tradeoffs, Documentation"],
+            ["Team", "Solo Builder (Masai AI PM capstone)"],
+            ["Timeline", "Masai AI PM capstone project"],
+            ["Outcome", "Scored 9/10"],
+        ],
+        narrative:
+            "Built as a Masai AI PM capstone: a mood-based content recommendation feature for Netflix India that ends decision fatigue on streaming platforms. A six-module pipeline — webhook intake, Gemini embeddings, Supabase pgvector retrieval, Gemini 2.5 Flash generation, and session logging — powers a working React/Tailwind frontend shipped via Lovable.dev.",
+        roleBullets: [
+            "Designed and shipped the full 6-module pipeline end-to-end: webhook → Gemini embeddings → Supabase pgvector RAG → Gemini 2.5 Flash → session logging",
+            "Made and defended an architecture tradeoff under a real constraint — pivoted the entire stack from OpenAI/Claude to all-Gemini mid-build after hitting billing limits, re-validating 768-dimension embeddings and a 0.60 match threshold without breaking retrieval quality",
+            "Treated documentation as a product artifact — audited all 6 deliverables for cross-document consistency (cost figures, stack references, session logging column names) before submission",
+            "Identified and disputed a grading inconsistency in the S4 prototype score, building an evidence-based regrade request around a likely stray-placeholder grader error",
+        ],
+        stack: ["Lovable.dev", "React", "Tailwind", "Make.com", "Supabase", "pgvector", "Gemini"],
+        takeaways: [
+            "A billing-driven architecture pivot mid-build is a real constraint, not a hypothetical one — re-validating embedding dimensions and match thresholds after switching providers was the difference between a working pivot and a broken one.",
+            "Documentation consistency across six separate deliverables isn't busywork — a single stray placeholder sentence was enough to cost real prototype points.",
+            "Disputing a grade required the same rigor as the build itself: evidence (screenshots on pages 4–10), not just an assertion that the score was wrong.",
+        ],
+        next: { note: "Up next: WhyAI — Chrome extension case study", href: "/work/whyai" },
+    },
+};
