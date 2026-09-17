@@ -82,7 +82,7 @@ export const projects = [
         judgment:
             "Framed the JTBD around three real moments — finding inspiration, discovering realistic options in-budget, booking quickly — rather than a generic feature list. Defined a single North Star Metric (% of bookings made through the assistant) before designing any screen, and wireframed specific failure modes, like a booking correction or typo'd input, rather than only the happy path.",
         tools: [],
-        link: "#",
+        link: "/work/alfred",
     },
 ];
 

@@ -119,6 +119,37 @@ export const detailPages = {
             "Scoring two solutions against the same framework, not just picking the more interesting one, is what killed the price-comparer idea early instead of half-building both.",
             "A recommendation engine isn't just a feature — it comes with real second-order effects (delivery partner compensation, data-ethics tradeoffs) that need to be designed for up front, not bolted on later.",
         ],
-        next: { note: "Up next: Alfred — AI travel assistant case study", href: "/#work" },
+        next: { note: "Up next: Alfred — AI travel assistant case study", href: "/work/alfred" },
+    },
+    alfred: {
+        slug: "alfred",
+        status: "Case Study / Wireframe",
+        titleMain: "Alfred — AI Travel Planning",
+        titleAccent: "Assistant",
+        subtitle: "Designing an AI travel assistant for EaseMyTrip, from JTBD to wireframe.",
+        banner: "/assets/banner-alfred.jpg",
+        bannerAlt: "Alfred AI travel assistant banner",
+        overview: [
+            ["My Role", "Solo Builder — Problem Framing, JTBD, User Flow, Wireframe Design"],
+            ["Team", "Solo (independent case study)"],
+            ["Timeline", "Independent project"],
+            ["Outcome", "Full wireframe with defined success metrics"],
+        ],
+        narrative:
+            "An independent case study designing an AI travel planning assistant for EaseMyTrip — India's #2 OTA, profitable since 2008, with 26M+ users across 7 countries. EaseMyTrip users plan trips across fragmented sources — Instagram for inspiration, TripAdvisor for research, separate flows for booking — with no single assistant tying it together. Alfred (Assistant for Limitless Flexibility in Reservation & Exploring Destination) is designed to close that gap: a conversational assistant that goes from trip inspiration to a saved, bookable itinerary in one flow.",
+        roleBullets: [
+            "Framed the JTBD around three real moments — finding trip inspiration, discovering realistic options within budget, and booking quickly with minimal input — rather than a generic feature list",
+            "Mapped a complete user flow from app discovery through itinerary creation to booking confirmation, including both the 'inspiration-first' and 'direct booking' paths",
+            "Wireframed specific failure modes, not just the happy path — including a user-side booking correction (editing an email ID mid-flow) and Alfred correctly parsing a typo-ridden prompt via NLU",
+            "Designed for four distinct 'AHA moments' in the flow — first destination recommendation, saved itinerary, sub-second booking with parallel budget-checking, and returning to a saved conversation",
+            "Defined a single North Star Metric (% of bookings made through Alfred) before designing any screen, with L1/L2 metrics and named risks (e.g., generic-feeling responses) each paired with a specific mitigation (e.g., varying conversational tone by mood)",
+        ],
+        stack: ["JTBD", "User Flow Mapping", "Wireframing", "Figma", "NLU Design"],
+        takeaways: [
+            "Naming the assistant and giving it a personality ('greets like a person') wasn't cosmetic — it was part of designing for a JTBD that included 'I don't know what's best for my group,' which needs a conversational answer, not a filtered list.",
+            "Wireframing error states (a booking correction, a typo'd prompt) mattered as much as the happy path — those are the moments that actually test whether the assistant feels reliable.",
+            "Setting the North Star Metric before any screen design kept every wireframe decision traceable back to one number: does this screen move a user closer to a completed booking.",
+        ],
+        next: { note: "Back to the start: RepMate — shipped product deep-dive", href: "/work/repmate" },
     },
 };
