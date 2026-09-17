@@ -201,14 +201,14 @@ export const analysisProjects = [
         caption: "In-depth analysis of vendor- and product-level sales data for retail/wholesale optimisation — identified inefficiencies in vendor performance and opportunities for bulk purchasing strategies.",
         tags: ["SQL", "Tableau", "Excel", "Python", "Jupyter"],
         banner: "/assets/analysis-vendor.jpg",
-        link: "#",
+        link: "/work/vendor-performance-analysis",
     },
     {
         title: "Airline Data Analysis",
         caption: "Operational data analysis for a regional airline — improving profit margins through aircraft-level revenue insights and occupancy optimisation strategies.",
         tags: ["Python", "SQL", "NumPy", "EDA", "Pandas"],
         banner: "/assets/analysis-airline.jpg",
-        link: "#",
+        link: "/work/airline-data-analysis",
     },
 ];
 

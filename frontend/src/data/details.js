@@ -152,4 +152,62 @@ export const detailPages = {
         ],
         next: { note: "Back to the start: RepMate — shipped product deep-dive", href: "/work/repmate" },
     },
+    "vendor-performance-analysis": {
+        slug: "vendor-performance-analysis",
+        status: "Data Analysis",
+        titleMain: "Vendor Performance",
+        titleAccent: "Analysis",
+        subtitle: "In-depth analysis of vendor and product-level sales data for retail/wholesale optimization.",
+        banner: "/assets/analysis-vendor.jpg",
+        bannerAlt: "Vendor Performance Analysis banner",
+        overview: [
+            ["My Role", "Solo Analyst — EDA, Statistical Testing, KPI Definition"],
+            ["Team", "Solo Analyst"],
+            ["Timeline", "Independent project"],
+            ["Outcome", "Identified vendor inefficiencies and bulk-purchasing opportunities"],
+        ],
+        narrative:
+            "An in-depth analysis of vendor and product-level sales data for a retail/wholesale company, aimed at identifying vendor performance inefficiencies, optimizing bulk purchasing strategies, and improving profitability by minimizing losses from slow-moving inventory. Exploratory data analysis, statistical testing, and correlation analysis uncovered actionable insights on vendor dependency, stock turnover, and pricing inefficiencies — using metrics like gross profit, unit cost, and inventory turnover to detect where promotional campaigns or pricing adjustments were needed.",
+        roleBullets: [
+            "Ran exploratory data analysis, statistical testing, and correlation analysis across vendor and product-level sales data",
+            "Defined and tracked KPIs (gross profit, unit cost, inventory turnover) to detect where pricing or promotions needed to change",
+            "Identified over-reliance on a small set of top vendors and quantified the opportunity for bulk-purchase savings",
+            "Surfaced underperforming brands needing promotion, top-performing vendors driving most revenue, and how bulk orders affect unit pricing",
+        ],
+        stack: ["Python", "SQL", "Tableau", "Excel", "Pandas", "Matplotlib", "NumPy", "Jupyter", "EDA", "KPI Tracking"],
+        takeaways: [
+            "Vendor dependency isn't visible from revenue numbers alone — correlation analysis was needed to separate 'top revenue vendor' from 'vendor the business is dangerously reliant on.'",
+            "Slow-moving inventory has a cost even when it isn't a visible loss — inventory turnover as a tracked KPI turned an invisible cost into a decision point.",
+        ],
+        next: { note: "Up next: Airline Data Analysis — revenue optimization case", href: "/work/airline-data-analysis" },
+    },
+    "airline-data-analysis": {
+        slug: "airline-data-analysis",
+        status: "Data Analysis",
+        titleMain: "Airline Data",
+        titleAccent: "Analysis",
+        subtitle: "Operational data analysis for a regional airline, aimed at revenue optimization and improved profit margins.",
+        banner: "/assets/analysis-airline.jpg",
+        bannerAlt: "Airline Data Analysis banner",
+        overview: [
+            ["My Role", "Solo Analyst — Revenue Modeling, Pricing Analysis"],
+            ["Team", "Solo Analyst"],
+            ["Timeline", "Independent project"],
+            ["Outcome", "Modeled a 10% occupancy increase's revenue impact"],
+        ],
+        narrative:
+            "An operational data analysis for a regional airline company struggling with rising fuel prices, taxes, labor costs, and regulatory pressures. Using aircraft-level revenue, ticket pricing, and occupancy insights, the analysis aimed to uncover strategies to improve profit margins — including total revenue per aircraft, average revenue per seat, and fare-type segmentation (economy, business, comfort) to assess peak performance periods and optimal pricing zones.",
+        roleBullets: [
+            "Built aircraft-level revenue and occupancy visualizations, segmented by fare type (economy, business, comfort)",
+            "Modeled how a 10% increase in occupancy would impact revenue, proposing data-backed solutions for better seat utilization",
+            "Identified low-performing aircraft for occupancy improvement and proposed pricing optimization that didn't compromise customer experience",
+            "Forecasted revenue impact from improved booking strategies and proposed route reallocation for operational efficiency",
+        ],
+        stack: ["Python", "SQL", "Pandas", "Matplotlib", "NumPy", "EDA", "KPI Tracking"],
+        takeaways: [
+            "Modeling a specific scenario (a 10% occupancy increase) rather than a vague 'improve occupancy' goal made the revenue impact concrete enough to act on.",
+            "Pricing optimization and customer experience are often treated as a tradeoff — this analysis treated 'without affecting customer experience' as a hard constraint on the pricing model, not an afterthought.",
+        ],
+        next: { note: "Back to the start: RepMate — shipped product deep-dive", href: "/work/repmate" },
+    },
 };
