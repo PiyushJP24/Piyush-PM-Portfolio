@@ -10,11 +10,35 @@ import Projects from "./components/portfolio/Projects";
 import Experience from "./components/portfolio/Experience";
 import Tools from "./components/portfolio/Tools";
 import Footer from "./components/portfolio/Footer";
+import RepmateDetail from "./components/portfolio/RepmateDetail";
 
 export default function App() {
     const footerRef = useRef(null);
     const [curtain, setCurtain] = useState(false);
     const [footerH, setFooterH] = useState(0);
+    const [path, setPath] = useState(() => window.location.pathname);
+    const isDetail = path.startsWith("/work/");
+
+    useEffect(() => {
+        const onPop = () => setPath(window.location.pathname);
+        window.addEventListener("popstate", onPop);
+        return () => window.removeEventListener("popstate", onPop);
+    }, []);
+
+    useEffect(() => {
+        if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true });
+        else window.scrollTo(0, 0);
+        if (!isDetail && window.location.hash) {
+            const t = setTimeout(() => {
+                const el = document.querySelector(window.location.hash);
+                if (!el) return;
+                if (window.__lenis) window.__lenis.scrollTo(el, { offset: -96, immediate: true });
+                else el.scrollIntoView();
+            }, 500);
+            return () => clearTimeout(t);
+        }
+        return undefined;
+    }, [path, isDetail]);
 
     useEffect(() => {
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -66,12 +90,18 @@ export default function App() {
                         : undefined
                 }
             >
-                <Hero />
-                <Marquee />
-                <About />
-                <Projects />
-                <Experience />
-                <Tools />
+                {isDetail ? (
+                    <RepmateDetail />
+                ) : (
+                    <>
+                        <Hero />
+                        <Marquee />
+                        <About />
+                        <Projects />
+                        <Experience />
+                        <Tools />
+                    </>
+                )}
             </main>
             <Footer ref={footerRef} curtain={curtain} />
         </MotionConfig>

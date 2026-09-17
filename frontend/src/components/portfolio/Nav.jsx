@@ -18,7 +18,10 @@ export function scrollToHash(e, hash) {
         return;
     }
     const el = document.querySelector(hash);
-    if (!el) return;
+    if (!el) {
+        window.location.href = hash === "#home" ? "/" : `/${hash}`;
+        return;
+    }
     if (window.__lenis) window.__lenis.scrollTo(el, { offset: -96 });
     else el.scrollIntoView({ behavior: "smooth" });
 }

@@ -29,7 +29,7 @@ Personal portfolio for a Product Manager (Piyush Jairam Paliwal). React + Tailwi
 
 ## Placeholders to swap (user follow-up)
 - Email now piyushjp24@gmail.com; social links, project links, resume link still `#` in `/app/frontend/src/data/content.js`
-- DONE (2026-07-15): real portrait (portrait.jpg) in About; Swiggy AOV + Alfred case-study tiles now use user-provided banners (banner-swiggy.jpg, banner-alfred.jpg)
+- DONE (2026-07-15): RepMate detail page at /work/repmate — same nav/footer shell, hero (title/subtitle/status/banner), 4-item overview grid, narrative, 7 checkmark role bullets, tech-stack chips, 3 takeaways, rotating "Crafted with intent & caffeine ✦ Vibe Coded 2026" badge, Check Next Project button. Lightweight pushState routing in App.js (no router lib); tile clicks use history.pushState, nav falls back to /#anchor off-home. Next Project button currently lands on /#work — point it to /work/decideai once that page exists. No Live Link / View PRD button (per user: app unpublished, no PRD link yet).
 - DONE (2026-07-14): Supporting Analysis restructured into a Projects / Visualisations pill-toggle — 2 analysis project cards (Vendor Performance, Airline Data) + 3 Tableau viz cards (Netflix Usage V3, Spotify Analysis, LLM Trends). Real user-provided images swapped in (analysis-vendor/airline.jpg, viz-netflix/spotify/llm.jpg). Tableau Public + per-card links still "#" pending URLs.
 
 ## Backlog

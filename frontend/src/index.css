@@ -102,8 +102,12 @@ section[id] {
     scroll-margin-top: 6.5rem;
 }
 
+/* Rotating circular badge */
+.badge-rotate { animation: spin-slow 18s linear infinite; }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
 @media (prefers-reduced-motion: reduce) {
-    .drift, .marquee-track { animation: none !important; }
+    .drift, .marquee-track, .badge-rotate { animation: none !important; }
 }
 
 @layer base {

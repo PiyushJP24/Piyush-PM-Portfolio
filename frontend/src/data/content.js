@@ -22,7 +22,7 @@ export const projects = [
         outcome:
             "74 exercises, AI feedback, and calorie tracking shipped — heading to the Play Store via an existing influencer network.",
         tools: ["Mobile App", "AI Feedback", "Solo Build"],
-        link: "#",
+        link: "/work/repmate",
     },
     {
         id: "decideai",

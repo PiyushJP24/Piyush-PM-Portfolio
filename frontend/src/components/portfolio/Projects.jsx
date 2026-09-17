@@ -20,7 +20,15 @@ function ProjectCard({ p, i }) {
         <motion.a
             href={p.link}
             onClick={(e) => {
-                if (p.link === "#") e.preventDefault();
+                if (p.link === "#") {
+                    e.preventDefault();
+                    return;
+                }
+                if (p.link.startsWith("/")) {
+                    e.preventDefault();
+                    window.history.pushState({}, "", p.link);
+                    window.dispatchEvent(new Event("popstate"));
+                }
             }}
             initial={{ opacity: 0, y: 36 }}
             whileInView={{ opacity: 1, y: 0 }}
