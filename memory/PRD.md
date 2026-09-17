@@ -29,7 +29,7 @@ Personal portfolio for a Product Manager (Piyush Jairam Paliwal). React + Tailwi
 
 ## Placeholders to swap (user follow-up)
 - Email now piyushjp24@gmail.com; social links, project links, resume link still `#` in `/app/frontend/src/data/content.js`
-- DONE (2026-07-15b): Detail pages refactored to a shared data-driven template — ProjectDetail.jsx + data/details.js drive /work/repmate and /work/decideai (add a details.js entry for future pages). Fixed footer-not-revealing on detail pages: shared Footer now takes pathKey prop and recomputes its reveal range per route. RepMate Next button → /work/decideai; DecideAI Next → /work/whyai (falls back to home until that page is added). Old RepmateDetail.jsx deleted.
+- DONE (2026-07-15c): WhyAI detail page at /work/whyai added as a details.js entry only (zero new components). DecideAI Next now resolves to it; WhyAI Next → /#work until Swiggy/Alfred pages exist. Detail pages refactored to a shared data-driven template — ProjectDetail.jsx + data/details.js drive /work/repmate and /work/decideai (add a details.js entry for future pages). Fixed footer-not-revealing on detail pages: shared Footer now takes pathKey prop and recomputes its reveal range per route. RepMate Next button → /work/decideai; DecideAI Next → /work/whyai (falls back to home until that page is added). Old RepmateDetail.jsx deleted.
 - DONE (2026-07-14): Supporting Analysis restructured into a Projects / Visualisations pill-toggle — 2 analysis project cards (Vendor Performance, Airline Data) + 3 Tableau viz cards (Netflix Usage V3, Spotify Analysis, LLM Trends). Real user-provided images swapped in (analysis-vendor/airline.jpg, viz-netflix/spotify/llm.jpg). Tableau Public + per-card links still "#" pending URLs.
 
 ## Backlog

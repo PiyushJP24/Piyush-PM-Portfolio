@@ -54,7 +54,7 @@ export const projects = [
         outcome:
             "Fully functional across five use-case personas, with an existing referral path into Amazon.",
         tools: ["Chrome Extension", "Personalization", "E-Commerce"],
-        link: "#",
+        link: "/work/whyai",
     },
     {
         id: "swiggy-aov",

@@ -62,4 +62,32 @@ export const detailPages = {
         ],
         next: { note: "Up next: WhyAI — Chrome extension case study", href: "/work/whyai" },
     },
+    whyai: {
+        slug: "whyai",
+        status: "In Progress",
+        titleMain: "WhyAI — AI Feature Translator for",
+        titleAccent: "Amazon India",
+        subtitle: "Explaining what an AI feature actually does, for the person actually buying it.",
+        banner: "/assets/banner-whyai.jpg",
+        bannerAlt: "WhyAI Chrome extension banner",
+        overview: [
+            ["My Role", "Solo Builder — End-to-End Build, Documentation"],
+            ["Team", "Solo Builder"],
+            ["Timeline", "Ongoing"],
+            ["Outcome", "In development, targeting Amazon PM roles"],
+        ],
+        narrative:
+            "A Chrome Extension that personalizes AI feature explanations on Amazon India's AI Store electronics pages — rewriting generic spec-sheet language into what an AI feature actually means for a specific buyer, across five use-case personas: Student, Professional, Gamer, Family, and Content Creator. Built specifically to target Amazon PM roles, anchored by an existing Amazon SDE-2 referral.",
+        roleBullets: [
+            "Designed a dual RAG layer architecture to ground persona-specific explanations in real product data rather than generic AI-feature copy",
+            "Built the five-persona system (Student, Professional, Gamer, Family, Content Creator) around each buyer's actual purchase job, not a one-size-fits-all feature list",
+            "Mirrored DecideAI's six-file documentation structure to keep the same rigor across both capstone-style projects",
+        ],
+        stack: ["Chrome Extension JS", "Gemini 2.0 Flash", "Supabase", "pgvector", "Make.com", "Figma", "Antigravity"],
+        takeaways: [
+            "A dual RAG layer earns its complexity only when a single retrieval pass can't hold both 'what the feature does' and 'what this specific buyer cares about' at once.",
+            "Targeting a specific company's PM roles (Amazon) changes what the project needs to prove — this one is built to demonstrate Amazon-specific product thinking, not general AI-PM skills.",
+        ],
+        next: { note: "Up next: Increasing Swiggy Instamart's AOV — case study", href: "/#work" },
+    },
 };
