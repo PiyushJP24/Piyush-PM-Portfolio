@@ -12,13 +12,34 @@ import Tools from "./components/portfolio/Tools";
 import Footer from "./components/portfolio/Footer";
 import ProjectDetail from "./components/portfolio/ProjectDetail";
 import { detailPages } from "./data/details";
+import { projects } from "./data/projects";
 
 export default function App() {
     const footerRef = useRef(null);
     const [curtain, setCurtain] = useState(false);
     const [footerH, setFooterH] = useState(0);
     const [path, setPath] = useState(() => window.location.pathname);
-    const detail = path.startsWith("/work/") ? detailPages[path.split("/")[2]] : null;
+    const slug = path.split("/")[2];
+    const hero = path.startsWith("/work/") ? detailPages[slug] : null;
+    const pair = (k) => (hero && hero.overview ? hero.overview.find(([key]) => key === k) : null)?.[1] || "";
+    const legacyData =
+        hero && !projects.find((p) => p.slug === slug)
+            ? {
+                  role: pair("My Role"),
+                  team: pair("Team"),
+                  timeline: pair("Timeline"),
+                  outcome: pair("Outcome"),
+                  overview: hero.narrative,
+                  myRole: hero.roleBullets,
+                  stack: hero.stack,
+                  takeaways: hero.takeaways,
+                  liveUrl: "",
+                  github: "",
+                  docs: [],
+              }
+            : null;
+    const detailData = (hero && projects.find((p) => p.slug === slug)) || legacyData;
+    const detail = hero && detailData ? hero : null;
 
     useEffect(() => {
         const onPop = () => setPath(window.location.pathname);
@@ -92,7 +113,7 @@ export default function App() {
                 }
             >
                 {detail ? (
-                    <ProjectDetail key={detail.slug} data={detail} />
+                    <ProjectDetail key={detail.slug} hero={detail} data={detailData} />
                 ) : (
                     <>
                         <Hero />

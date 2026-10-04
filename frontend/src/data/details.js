@@ -150,7 +150,7 @@ export const detailPages = {
             "Wireframing error states (a booking correction, a typo'd prompt) mattered as much as the happy path — those are the moments that actually test whether the assistant feels reliable.",
             "Setting the North Star Metric before any screen design kept every wireframe decision traceable back to one number: does this screen move a user closer to a completed booking.",
         ],
-        next: { note: "Back to the start: RepMate — shipped product deep-dive", href: "/work/repmate" },
+        next: { note: "Up next: Windows 11 File Explorer Redesign — teardown & redesign", href: "/work/windows11" },
     },
     "vendor-performance-analysis": {
         slug: "vendor-performance-analysis",
@@ -208,6 +208,16 @@ export const detailPages = {
             "Modeling a specific scenario (a 10% occupancy increase) rather than a vague 'improve occupancy' goal made the revenue impact concrete enough to act on.",
             "Pricing optimization and customer experience are often treated as a tradeoff — this analysis treated 'without affecting customer experience' as a hard constraint on the pricing model, not an afterthought.",
         ],
+        next: { note: "Back to the start: RepMate — shipped product deep-dive", href: "/work/repmate" },
+    },
+    windows11: {
+        slug: "windows11",
+        status: "Case study",
+        titleMain: "Windows 11 File Explorer",
+        titleAccent: "Redesign",
+        subtitle: "A teardown of Windows 11 and a Figma redesign of search, right-click and Properties.",
+        banner: "/assets/banner-windows11.jpg",
+        bannerAlt: "Windows 11 File Explorer redesign banner",
         next: { note: "Back to the start: RepMate — shipped product deep-dive", href: "/work/repmate" },
     },
 };
