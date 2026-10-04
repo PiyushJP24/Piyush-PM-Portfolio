@@ -58,6 +58,9 @@ function DotBullets({ items, testidPrefix }) {
     );
 }
 
+const actionPill =
+    "btn-circle inline-flex items-center justify-center gap-3 rounded-full border border-ink/25 py-3.5 pl-11 pr-8 text-sm font-medium tracking-wide text-ink";
+
 export default function ProjectDetail({ hero, data }) {
     const goNext = (e) => {
         if (!hero.next.href.startsWith("/work/")) return;
@@ -71,7 +74,7 @@ export default function ProjectDetail({ hero, data }) {
         ["Timeline", data.timeline],
         ["Outcome", data.outcome],
     ].filter(([, v]) => v);
-    const docs = (data.docs || []).filter((d) => d && d.label);
+    const showActions = Boolean(data.liveUrl || data.docsUrl || (data.liveDisabled && data.liveLabel));
 
     return (
         <article data-testid={`${hero.slug}-detail`} className="mx-auto max-w-4xl px-6 pb-32 pt-32 md:pt-40">
@@ -88,8 +91,8 @@ export default function ProjectDetail({ hero, data }) {
             </motion.div>
 
             <motion.div {...rise(0.08)} className="mt-8">
-                <span className="rounded-full bg-forest px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-cream">
-                    {hero.status}
+                <span className="whitespace-nowrap rounded-full bg-forest px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-cream">
+                    {data.tag || hero.status}
                 </span>
                 <h1
                     data-testid="detail-title"
@@ -98,36 +101,6 @@ export default function ProjectDetail({ hero, data }) {
                     {hero.titleMain} <Accent>{hero.titleAccent}</Accent>
                 </h1>
                 <p className="mt-4 max-w-xl text-sm text-fog md:text-lg">{hero.subtitle}</p>
-                {(data.liveUrl || data.github) && (
-                    <div className="mt-6 flex flex-wrap gap-3">
-                        {data.liveUrl && (
-                            <a
-                                href={data.liveUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                data-cursor="Live"
-                                data-testid="live-link-button"
-                                className="inline-flex items-center gap-1.5 rounded-full bg-forest px-5 py-2.5 text-xs font-medium text-cream transition-colors duration-300 hover:bg-ink"
-                            >
-                                Live Link
-                                <ArrowUpRight size={13} />
-                            </a>
-                        )}
-                        {data.github && (
-                            <a
-                                href={data.github}
-                                target="_blank"
-                                rel="noreferrer"
-                                data-cursor="GitHub"
-                                data-testid="github-button"
-                                className="inline-flex items-center gap-1.5 rounded-full border border-ink/25 px-5 py-2.5 text-xs font-medium text-ink transition-colors duration-300 hover:border-forest hover:bg-forest hover:text-cream"
-                            >
-                                GitHub
-                                <ArrowUpRight size={13} />
-                            </a>
-                        )}
-                    </div>
-                )}
             </motion.div>
 
             <motion.div {...rise(0.16)} className="mt-10 overflow-hidden rounded-[1.75rem] border border-line">
@@ -146,6 +119,48 @@ export default function ProjectDetail({ hero, data }) {
                     </div>
                 ))}
             </motion.dl>
+
+            {showActions && (
+                <motion.div {...rise(0.24)} data-testid="detail-actions" className="mt-10 flex flex-col gap-4 sm:flex-row">
+                    {data.liveUrl ? (
+                        <a
+                            href={data.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            data-cursor="Live"
+                            data-testid="live-button"
+                            className={actionPill}
+                        >
+                            <span className="fill-dot" aria-hidden="true" />
+                            <span className="btn-label relative">{data.liveLabel || "View live project"}</span>
+                            <ArrowUpRight size={15} className="btn-label relative" aria-hidden="true" />
+                        </a>
+                    ) : data.liveDisabled && data.liveLabel ? (
+                        <span
+                            data-testid="live-button-disabled"
+                            className={`${actionPill} pointer-events-none opacity-50 [cursor:none]`}
+                        >
+                            <span className="fill-dot" aria-hidden="true" />
+                            <span className="relative">{data.liveLabel}</span>
+                            <ArrowUpRight size={15} className="relative" aria-hidden="true" />
+                        </span>
+                    ) : null}
+                    {data.docsUrl && (
+                        <a
+                            href={data.docsUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            data-cursor="Read"
+                            data-testid="docs-button"
+                            className={actionPill}
+                        >
+                            <span className="fill-dot" aria-hidden="true" />
+                            <span className="btn-label relative">{data.docsLabel || "Read the documentation"}</span>
+                            <ArrowUpRight size={15} className="btn-label relative" aria-hidden="true" />
+                        </a>
+                    )}
+                </motion.div>
+            )}
 
             {data.overview && (
                 <motion.section {...rise(0.05)} className="mt-14">
@@ -221,44 +236,6 @@ export default function ProjectDetail({ hero, data }) {
                 </Section>
             )}
 
-            {docs.length > 0 && (
-                <Section testid="detail-docs" title="Read the" accent="full thinking">
-                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                        {docs.map((d, i) =>
-                            d.href ? (
-                                <a
-                                    key={d.label}
-                                    href={d.href}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    data-cursor="Read"
-                                    data-testid={`doc-card-${i}`}
-                                    className="flex items-center justify-between gap-4 rounded-2xl border border-ink/25 px-6 py-5 transition-colors duration-300 hover:border-forest"
-                                >
-                                    <div>
-                                        <p className="text-sm font-semibold text-ink">{d.label}</p>
-                                        <p className="mt-1 text-sm text-fog">{d.desc}</p>
-                                    </div>
-                                    <ArrowUpRight size={16} className="shrink-0 text-forest" />
-                                </a>
-                            ) : (
-                                <div
-                                    key={d.label}
-                                    data-testid={`doc-card-${i}`}
-                                    className="flex items-center justify-between gap-4 rounded-2xl border border-ink/25 px-6 py-5"
-                                >
-                                    <div>
-                                        <p className="text-sm font-semibold text-ink">{d.label}</p>
-                                        <p className="mt-1 text-sm text-fog">{d.desc}</p>
-                                    </div>
-                                    <ArrowUpRight size={16} className="shrink-0 text-forest" />
-                                </div>
-                            )
-                        )}
-                    </div>
-                </Section>
-            )}
-
             {data.metrics && (
                 <Section testid="detail-metrics" title="04" accent="Metrics">
                     <p className="mt-4 text-sm leading-relaxed text-ink/80 md:text-base">{data.metrics}</p>
@@ -292,7 +269,7 @@ export default function ProjectDetail({ hero, data }) {
                         onClick={goNext}
                         data-cursor="Next"
                         data-testid="next-project-button"
-                        className="btn-circle inline-flex items-center gap-3 rounded-full border border-ink/25 py-3.5 pl-11 pr-8 text-sm font-medium tracking-wide text-ink"
+                        className={actionPill}
                     >
                         <span className="fill-dot" aria-hidden="true" />
                         <span className="btn-label relative">Check Next Project</span>

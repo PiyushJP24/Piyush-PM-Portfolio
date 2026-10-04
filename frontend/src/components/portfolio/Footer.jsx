@@ -2,7 +2,12 @@ import { forwardRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUp, ArrowUpRight } from "lucide-react";
 import ResumeButton from "./ResumeButton";
-import { email, socials } from "../../data/content";
+import { email, githubUrl, linkedinUrl } from "../../data/site";
+
+const socials = [
+    { name: "LinkedIn", href: linkedinUrl },
+    { name: "GitHub", href: githubUrl },
+];
 
 function Reveal({ p, t0, t1, curtain, className, children, testid }) {
     const o = useTransform(p, [t0, t1], [0, 1]);
@@ -105,9 +110,8 @@ const Footer = forwardRef(function Footer({ curtain, pathKey }, ref) {
                             <a
                                 key={s.name}
                                 href={s.href}
-                                onClick={(e) => {
-                                    if (s.href === "#") e.preventDefault();
-                                }}
+                                target="_blank"
+                                rel="noreferrer"
                                 data-cursor="Visit"
                                 data-testid={`social-link-${s.name.toLowerCase()}`}
                                 className="sweep inline-flex items-center gap-1 text-sm font-medium text-cream/80 transition-colors hover:text-cream"
