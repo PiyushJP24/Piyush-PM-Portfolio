@@ -66,7 +66,12 @@ export const projects = [
     "tile": {
       "problem": "Mainstream fitness apps are built for other markets, and none is built around a lifter in India who wants quick set logging, calorie counts from local food and a fair price.",
       "judgmentCalls": "Five core functions only, free logging with premium AI features, and photo scans capped at 8 per user per day to keep AI cost predictable.",
-      "outcome": "All five core functions working end to end; launch paused on build cost."
+      "outcome": "All five core functions working end to end; launch paused on build cost.",
+      "chips": [
+        "Mobile App",
+        "AI Workout Plans",
+        "Freemium Model"
+      ]
     }
   },
   {
@@ -124,7 +129,12 @@ export const projects = [
     "tile": {
       "problem": "Viewers spend more time choosing than watching, and the home screen knows what they watched before but not how they feel tonight.",
       "judgmentCalls": "The model writes the reason while the catalogue supplies runtime, language and rating, and the retrieval cutoff was lowered from 0.70 to 0.60 because strict matching rejected niche moods.",
-      "outcome": "Masai capstone scored 9/10: a typed mood returns three catalogue grounded picks with reasons."
+      "outcome": "Masai capstone scored 9/10: a typed mood returns three catalogue grounded picks with reasons.",
+      "chips": [
+        "Recommendation AI",
+        "RAG Pipeline",
+        "Responsible AI"
+      ]
     }
   },
   {
@@ -192,7 +202,7 @@ export const projects = [
       "outcome": "Live prototype on Vercel and Render with per feature confidence scores the model cannot influence.",
       "chips": [
         "Dual RAG",
-        "Personalization",
+        "Confidence Scoring",
         "E-Commerce"
       ]
     }
@@ -252,7 +262,12 @@ export const projects = [
     "tile": {
       "problem": "Quick commerce shoppers place many small orders because they do not track what is running out at home, and every small order costs the platform money.",
       "judgmentCalls": "Chose restocking over a price comparer (2.2 against -1.5 on impact times confidence minus effort) and placed the nudge in the cart, where the shopper is already deciding.",
-      "outcome": "Deployed front end prototype of the cart restock flow; the 10 percent order value lift is a proposed target, not a result."
+      "outcome": "Deployed front end prototype of the cart restock flow; the 10 percent order value lift is a proposed target, not a result.",
+      "chips": [
+        "Quick Commerce",
+        "Unit Economics",
+        "Cart UX"
+      ]
     }
   },
   {
@@ -262,7 +277,7 @@ export const projects = [
     "team": "Solo",
     "timeline": "Apr to Jun 2026",
     "outcome": "Live prototype where the model writes destinations, itineraries and hotels as JSON and booking steps are scripted",
-    "liveUrl": "",
+    "liveUrl": "https://alfred-ai-travel-assistant.vercel.app/",
     "overview": "Planning a trip means hopping between inspiration sites, itinerary blogs and booking pages, and nothing connects them. ALFRED suggests destinations from a mood, builds a day by day itinerary and suggests hotels within a budget, then walks the traveller through a scripted booking confirmation. The design call I like most is the split: the model writes only the open ended pieces, as strict JSON that fills the wireframe's cards, while dates, budget, traveller details and confirmation are scripted. It began as a wireframe deck and became a live prototype.",
     "myRole": [
       "Wrote the problem statement, persona, jobs to be done map, user flow and wireframes, named the product and defined metrics and risks before any build",
@@ -313,7 +328,14 @@ export const projects = [
     "tile": {
       "problem": "Planning a trip means hopping between inspiration sites, itinerary blogs and booking pages, and nothing connects them.",
       "judgmentCalls": "One conversation instead of separate screens, structured JSON cards so the wireframe became the model output schema, and AI only for destinations, itineraries and hotels with booking steps scripted.",
-      "outcome": "Prototype where the model writes destinations, itineraries and hotels as JSON and booking steps are scripted."
+      "outcome": "Prototype where the model writes destinations, itineraries and hotels as JSON and booking steps are scripted.",
+      "chips": [
+        "Conversational AI",
+        "Structured JSON",
+        "Travel Tech"
+      ],
+      "title": "ALFRED: AI Travel Assistant",
+      "subtitle": "A conversational travel assistant that turns a mood into destinations, an itinerary and hotel options."
     }
   },
   {

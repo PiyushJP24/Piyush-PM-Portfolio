@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import SectionHead from "./SectionHead";
 import ResumeButton from "./ResumeButton";
+import { githubUrl, linkedinUrl } from "../../data/site";
 
 const facts = [
     ["Based in", "Gurgaon, India"],
@@ -66,8 +68,30 @@ export default function About() {
                                 </div>
                             ))}
                         </dl>
-                        <div className="mt-8">
+                        <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
                             <ResumeButton testid="view-resume-button-about" />
+                            <a
+                                href={linkedinUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                data-cursor="Visit"
+                                data-testid="about-linkedin-link"
+                                className="sweep inline-flex items-center gap-1 text-sm font-medium text-fog transition-colors hover:text-ink"
+                            >
+                                LinkedIn
+                                <ArrowUpRight size={12} />
+                            </a>
+                            <a
+                                href={githubUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                data-cursor="Visit"
+                                data-testid="about-github-link"
+                                className="sweep inline-flex items-center gap-1 text-sm font-medium text-fog transition-colors hover:text-ink"
+                            >
+                                GitHub
+                                <ArrowUpRight size={12} />
+                            </a>
                         </div>
                     </motion.div>
                 </div>
