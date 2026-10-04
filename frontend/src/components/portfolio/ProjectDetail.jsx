@@ -65,8 +65,7 @@ export default function ProjectDetail({ hero, data }) {
     const goNext = (e) => {
         if (!hero.next.href.startsWith("/work/")) return;
         e.preventDefault();
-        window.history.pushState({}, "", hero.next.href);
-        window.dispatchEvent(new Event("popstate"));
+        if (window.__navigate) window.__navigate(hero.next.href);
     };
     const overviewItems = [
         ["My Role", data.role],
@@ -83,6 +82,10 @@ export default function ProjectDetail({ hero, data }) {
             <motion.div {...rise(0)}>
                 <a
                     href="/#work"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        if (window.__navigate) window.__navigate("/#work");
+                    }}
                     data-cursor="All Work"
                     data-testid="back-to-work-link"
                     className="sweep inline-flex items-center gap-2 text-sm font-medium text-fog transition-colors hover:text-ink"

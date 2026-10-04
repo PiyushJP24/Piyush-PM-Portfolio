@@ -3,13 +3,13 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 
 const EASE = [0.22, 1, 0.36, 1];
 
-function MaskedLine({ children, delay, className }) {
+function MaskedLine({ children, delay, className, start }) {
     return (
         <span className="-mb-[0.09em] -mt-[0.08em] block overflow-hidden pb-[0.09em] pt-[0.08em]">
             <motion.span
                 className={`block ${className}`}
                 initial={{ y: "115%" }}
-                animate={{ y: 0 }}
+                animate={start ? { y: 0 } : { y: "115%" }}
                 transition={{ duration: 0.95, delay, ease: EASE }}
             >
                 {children}
@@ -23,7 +23,7 @@ const pills = [
     { label: "Ships with AI, not hype", cls: "bottom-[34vh] left-[5vw] md:bottom-[24vh] md:left-auto md:right-[4vw]", rot: "2.5deg", delay: 1.35, testid: "pill-ai" },
 ];
 
-export default function Hero() {
+export default function Hero({ start = true }) {
     const ref = useRef(null);
     const reduced = useReducedMotion();
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -40,11 +40,12 @@ export default function Hero() {
 
             {/* Layer 3a — headline text behind character, 1x scroll */}
             <div className="absolute left-[6vw] top-[19vh] z-20 md:top-[15vh]">
-                <MaskedLine delay={0.15} className="text-base font-medium text-ink/70 md:text-xl">
+                <MaskedLine start={start} delay={0.15} className="text-base font-medium text-ink/70 md:text-xl">
                     Hey I&rsquo;m a
                 </MaskedLine>
                 <div data-testid="hero-headline">
                     <MaskedLine
+                        start={start}
                         delay={0.3}
                         className="text-[16vw] font-bold leading-[0.92] tracking-[-0.03em] text-ink md:text-[11vw]"
                     >
@@ -62,7 +63,7 @@ export default function Hero() {
                     src="/assets/character.png"
                     alt="Illustration of Piyush"
                     initial={{ y: 90, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
+                    animate={start ? { y: 0, opacity: 1 } : { y: 90, opacity: 0 }}
                     transition={{ duration: 1.15, delay: 0.55, ease: EASE }}
                     className="h-full w-auto object-contain drop-shadow-[0_34px_44px_rgba(20,28,22,0.28)]"
                 />
@@ -71,6 +72,7 @@ export default function Hero() {
             {/* Layer 3b — "Manager" in front of character */}
             <div className="absolute bottom-[12vh] left-[10vw] z-40 md:bottom-[11vh] md:left-[27vw]">
                 <MaskedLine
+                    start={start}
                     delay={0.45}
                     className="text-[16vw] font-bold leading-[0.92] tracking-[-0.03em] text-forest md:text-[11vw]"
                 >
@@ -87,17 +89,11 @@ export default function Hero() {
                 >
                     <motion.div
                         initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
+                        animate={start ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
                         transition={{ duration: 0.6, delay: p.delay, ease: EASE }}
                         data-testid={p.testid}
                         className="flex items-center gap-2.5 rounded-full border border-line bg-cream/85 px-4 py-2 text-xs font-medium text-ink shadow-[0_12px_28px_-12px_rgba(34,38,31,0.35)] backdrop-blur-md md:text-sm"
                     >
-                        {p.dot && (
-                            <span className="relative flex h-2 w-2" aria-hidden="true">
-                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-forest opacity-60" />
-                                <span className="relative inline-flex h-2 w-2 rounded-full bg-forest" />
-                            </span>
-                        )}
                         {p.label}
                     </motion.div>
                 </div>
@@ -106,7 +102,7 @@ export default function Hero() {
             {/* Scroll cue */}
             <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={start ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ delay: 1.7, duration: 0.8 }}
                 className="absolute bottom-8 left-[6vw] z-40 flex items-center gap-4"
                 data-testid="scroll-cue"

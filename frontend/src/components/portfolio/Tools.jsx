@@ -120,19 +120,19 @@ export default function Tools() {
                                 className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-panel/40 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-16px_rgba(34,38,31,0.22)]"
                             >
                                 <div className="aspect-[16/10] overflow-hidden">
-                                    <img src={a.banner} alt={`${a.title} banner`} className="h-full w-full object-contain" />
+                                    <img src={a.banner} alt={`${a.title} banner`} className="h-full w-full object-cover" />
                                 </div>
                                 <div className="flex flex-1 flex-col p-6">
                                     <h4 className="text-base font-semibold text-ink">{a.title}</h4>
                                     <p className="mt-2 text-sm leading-relaxed text-fog">{a.caption}</p>
-                                    <div className="mt-4 flex flex-wrap gap-2">
+                                    <div className="mt-auto flex flex-wrap gap-2 pt-4">
                                         {a.tags.map((t) => (
                                             <span key={t} className="rounded-full border border-line bg-cream px-3 py-1 text-xs font-medium text-fog">
                                                 {t}
                                             </span>
                                         ))}
                                     </div>
-                                    <div className="mt-auto pt-5">
+                                    <div className="pt-5">
                                         <a
                                             href={a.link}
                                             onClick={(e) => {
@@ -142,8 +142,7 @@ export default function Tools() {
                                                 }
                                                 if (a.link.startsWith("/")) {
                                                     e.preventDefault();
-                                                    window.history.pushState({}, "", a.link);
-                                                    window.dispatchEvent(new Event("popstate"));
+                                                    if (window.__navigate) window.__navigate(a.link);
                                                 }
                                             }}
                                             data-cursor="Open"

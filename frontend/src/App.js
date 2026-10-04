@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
-import { MotionConfig } from "framer-motion";
+import { AnimatePresence, MotionConfig, useReducedMotion } from "framer-motion";
 import Cursor from "./components/portfolio/Cursor";
 import Nav from "./components/portfolio/Nav";
 import Hero from "./components/portfolio/Hero";
@@ -11,6 +11,8 @@ import Experience from "./components/portfolio/Experience";
 import Tools from "./components/portfolio/Tools";
 import Footer from "./components/portfolio/Footer";
 import ProjectDetail from "./components/portfolio/ProjectDetail";
+import Splash from "./components/portfolio/Splash";
+import ScrollIndicator from "./components/portfolio/ScrollIndicator";
 import { detailPages } from "./data/details";
 import { projects } from "./data/projects";
 import { analysis } from "./data/analysis";
@@ -19,7 +21,12 @@ export default function App() {
     const footerRef = useRef(null);
     const [curtain, setCurtain] = useState(false);
     const [footerH, setFooterH] = useState(0);
+    const reduced = useReducedMotion();
+    const [splashDone, setSplashDone] = useState(() => sessionStorage.getItem("pjp_splash") === "1");
     const [path, setPath] = useState(() => window.location.pathname);
+    const [wipe, setWipe] = useState(0); // 0 parked, 1 covering, 2 covered, 3 revealing
+    const wipingRef = useRef(false);
+
     const slug = path.split("/")[2];
     const hero = path.startsWith("/work/") ? detailPages[slug] : null;
     const pair = (k) => (hero && hero.overview ? hero.overview.find(([key]) => key === k) : null)?.[1] || "";
@@ -47,10 +54,51 @@ export default function App() {
     const detailData = (hero && projects.find((p) => p.slug === slug)) || legacyData;
     const detail = hero && detailData ? hero : null;
 
+    const finishSplash = () => {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+        sessionStorage.setItem("pjp_splash", "1");
+        setSplashDone(true);
+    };
+
     useEffect(() => {
-        const onPop = () => setPath(window.location.pathname);
+        const onPop = () => {
+            if (wipingRef.current) {
+                setPath(window.location.pathname);
+                return;
+            }
+            wipingRef.current = true;
+            setWipe(1);
+            setTimeout(() => {
+                setPath(window.location.pathname);
+                setWipe(2);
+            }, 400);
+            setTimeout(() => setWipe(3), 430);
+            setTimeout(() => {
+                setWipe(0);
+                wipingRef.current = false;
+            }, 860);
+        };
         window.addEventListener("popstate", onPop);
-        return () => window.removeEventListener("popstate", onPop);
+        window.__navigate = (href) => {
+            if (wipingRef.current) return;
+            wipingRef.current = true;
+            setWipe(1);
+            setTimeout(() => {
+                window.history.pushState({}, "", href);
+                setPath(href.split("#")[0] || "/");
+                setWipe(2);
+            }, 400);
+            setTimeout(() => setWipe(3), 430);
+            setTimeout(() => {
+                setWipe(0);
+                wipingRef.current = false;
+            }, 860);
+        };
+        return () => {
+            window.removeEventListener("popstate", onPop);
+            window.__navigate = null;
+        };
     }, []);
 
     useEffect(() => {
@@ -69,8 +117,8 @@ export default function App() {
     }, [path, detail]);
 
     useEffect(() => {
-        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (reduced) return undefined;
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reducedMotion) return undefined;
         const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
         window.__lenis = lenis;
         let raf;
@@ -105,7 +153,32 @@ export default function App() {
         <MotionConfig reducedMotion="user">
             <div className="grain" aria-hidden="true" />
             <Cursor />
+            <ScrollIndicator />
             <Nav />
+            <div
+                data-testid="page-wipe"
+                aria-hidden="true"
+                className="fixed inset-0 z-[9000] bg-pinedeep"
+                style={
+                    reduced
+                        ? {
+                              opacity: wipe === 1 || wipe === 2 ? 1 : 0,
+                              transition: "opacity 0.2s ease",
+                              pointerEvents: wipe ? "auto" : "none",
+                          }
+                        : {
+                              transform:
+                                  wipe === 0
+                                      ? "translateY(100%)"
+                                      : wipe === 3
+                                        ? "translateY(-100%)"
+                                        : "translateY(0%)",
+                              transition: wipe === 0 ? "none" : "transform 0.4s cubic-bezier(0.76, 0, 0.24, 1)",
+                              pointerEvents: wipe ? "auto" : "none",
+                          }
+                }
+            />
+            <AnimatePresence>{!splashDone && <Splash key="splash" onDone={finishSplash} />}</AnimatePresence>
             <main
                 className="relative z-10 bg-cream"
                 style={
@@ -122,7 +195,7 @@ export default function App() {
                     <ProjectDetail key={detail.slug} hero={detail} data={detailData} />
                 ) : (
                     <>
-                        <Hero />
+                        <Hero start={splashDone} />
                         <Marquee />
                         <About />
                         <Projects />

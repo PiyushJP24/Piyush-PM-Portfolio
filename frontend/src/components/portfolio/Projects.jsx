@@ -48,8 +48,7 @@ function ProjectCard({ p, i }) {
                 }
                 if (t.link.startsWith("/")) {
                     e.preventDefault();
-                    window.history.pushState({}, "", t.link);
-                    window.dispatchEvent(new Event("popstate"));
+                    if (window.__navigate) window.__navigate(t.link);
                 }
             }}
             initial={{ opacity: 0, y: 36 }}

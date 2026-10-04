@@ -31,10 +31,8 @@ code {
     color: var(--cream);
 }
 
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--cream); }
-::-webkit-scrollbar-thumb { background: #CFC9B6; border-radius: 8px; border: 3px solid var(--cream); }
-::-webkit-scrollbar-thumb:hover { background: var(--forest); }
+html { scrollbar-width: none; }
+::-webkit-scrollbar { display: none; }
 
 @media (pointer: fine) {
     body, a, button, [data-cursor] { cursor: none; }
