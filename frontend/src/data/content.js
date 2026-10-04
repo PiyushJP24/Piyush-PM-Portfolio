@@ -84,6 +84,20 @@ export const projects = [
         tools: [],
         link: "/work/alfred",
     },
+    {
+        id: "windows11",
+        status: "Case Study",
+        tone: "case",
+        name: "Windows 11 File Explorer Redesign",
+        tag: "A teardown of Windows 11 and a Figma redesign of search, right-click and Properties.",
+        banner: "/assets/banner-windows11.jpg",
+        problem:
+            "Windows 11's growth came from the Windows 10 end-of-support deadline, not preference — and File Explorer's slow, cluttered search and crowded right-click menu are its most visible friction points.",
+        judgment:
+            "Chose a problem Microsoft's own 2026 roadmap already points at, then redesigned search with inline filter chips, cut the right-click menu to six Tier-1 actions, and rebuilt Properties around what users actually open first.",
+        tools: [],
+        link: "/work/windows11",
+    },
 ];
 
 export const experience = [
