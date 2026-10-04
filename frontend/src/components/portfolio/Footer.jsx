@@ -33,15 +33,18 @@ function Reveal({ p, t0, t1, curtain, className, children, testid }) {
     );
 }
 
-const Footer = forwardRef(function Footer({ curtain, pathKey }, ref) {
-    const { scrollY } = useScroll();
+const Footer = forwardRef(function Footer({ curtain, pathKey, containerRef }, ref) {
+    const { scrollY } = useScroll(containerRef ? { container: containerRef } : undefined);
     const [range, setRange] = useState([0, 1]);
 
     useEffect(() => {
         const calc = () => {
             const fh = ref.current ? ref.current.offsetHeight : 640;
-            const doc = document.documentElement.scrollHeight;
-            const vh = window.innerHeight;
+            const doc =
+                containerRef && containerRef.current
+                    ? containerRef.current.scrollHeight
+                    : document.documentElement.scrollHeight;
+            const vh = containerRef && containerRef.current ? containerRef.current.clientHeight : window.innerHeight;
             setRange([Math.max(doc - fh - vh, 0), Math.max(doc - vh, 1)]);
         };
         calc();
@@ -51,12 +54,13 @@ const Footer = forwardRef(function Footer({ curtain, pathKey }, ref) {
             clearTimeout(t);
             window.removeEventListener("resize", calc);
         };
-    }, [ref, curtain, pathKey]);
+    }, [ref, curtain, pathKey, containerRef]);
 
     const p = useTransform(scrollY, range, [0, 1], { clamp: true });
 
     const toTop = () => {
-        if (window.__lenis) window.__lenis.scrollTo(0);
+        if (containerRef && containerRef.current) containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+        else if (window.__lenis) window.__lenis.scrollTo(0);
         else window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
@@ -125,7 +129,7 @@ const Footer = forwardRef(function Footer({ curtain, pathKey }, ref) {
 
                 <Reveal p={p} t0={0.7} t1={0.95} curtain={curtain} testid="footer-bottom">
                     <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-cream/15 pt-6 text-xs text-cream/55 sm:flex-row">
-                        <p>© 2026 Piyush Jairam Paliwal — crafted with intent &amp; caffeine.</p>
+                        <p>© 2026 Piyush Jairam Paliwal. Crafted with intent &amp; caffeine.</p>
                         <button
                             type="button"
                             onClick={toTop}

@@ -109,7 +109,7 @@ export default function Projects() {
                 no="02"
                 kicker="Featured Projects"
                 title="Work"
-                desc="Things I've shipped, studied, or stress-tested — each with the problem, the calls I made, and what actually happened."
+                desc="Things I've shipped, studied, or stress-tested, each with the problem, the calls I made, and what actually happened."
             />
             <div className="mt-14 grid gap-8 md:grid-cols-2">
                 {projects.map((p, i) => (

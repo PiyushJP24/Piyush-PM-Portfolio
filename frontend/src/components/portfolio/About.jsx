@@ -43,7 +43,7 @@ export default function About() {
                         className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
                     <figcaption className="absolute inset-x-0 bottom-0 translate-y-4 bg-gradient-to-t from-ink/75 to-transparent p-5 pt-14 text-sm text-cream opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-                        Piyush Jairam Paliwal — Product Manager.
+                        Piyush Jairam Paliwal, Product Manager.
                     </figcaption>
                 </motion.figure>
 
@@ -61,7 +61,7 @@ export default function About() {
                     />
                     <motion.div {...bodyMotion} transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}>
                         <p className="mt-6 text-sm leading-relaxed text-ink/80 md:text-base">
-                            I&rsquo;m Piyush Jairam Paliwal — an MBA candidate with an engineering degree, and the kind
+                            I&rsquo;m Piyush Jairam Paliwal, an MBA candidate with an engineering degree, and the kind
                             of PM who would rather prototype the idea than schedule a meeting about it.
                         </p>
                         <p className="mt-4 text-sm leading-relaxed text-ink/80 md:text-base">

@@ -20,8 +20,10 @@ import { analysis } from "./data/analysis";
 const LAYER_EASE = [0.32, 0.72, 0, 1];
 const LAYER_TRANSITION = { duration: 0.5, ease: LAYER_EASE };
 
-function ProjectLayer({ layer, hero, data, reduced, top, onSwipeBack }) {
+function ProjectLayer({ layer, hero, data, reduced, top, onSwipeBack, curtain }) {
     const scrollRef = useRef(null);
+    const footerRef = useRef(null);
+    const [footerH, setFooterH] = useState(0);
 
     // while this is the top layer, its scroll container drives the scroll indicator
     useEffect(() => {
@@ -36,6 +38,19 @@ function ProjectLayer({ layer, hero, data, reduced, top, onSwipeBack }) {
             }
         };
     }, [top]);
+
+    // keep keyboard scrolling (Space/arrows/PageDown) on the layer while the home document is locked
+    useEffect(() => {
+        if (top && scrollRef.current) scrollRef.current.focus({ preventScroll: true });
+    }, [top]);
+
+    // measure the layer footer so the cream content can reveal it (same curtain look as home)
+    useEffect(() => {
+        if (!footerRef.current) return undefined;
+        const ro = new ResizeObserver((entries) => setFooterH(entries[0].contentRect.height));
+        ro.observe(footerRef.current);
+        return () => ro.disconnect();
+    }, []);
 
     // trackpad two-finger swipe right -> back (deltaX negative under natural scrolling)
     useEffect(() => {
@@ -65,11 +80,6 @@ function ProjectLayer({ layer, hero, data, reduced, top, onSwipeBack }) {
         return () => el.removeEventListener("wheel", onWheel);
     }, [reduced, onSwipeBack]);
 
-    // keep keyboard scrolling (Space/arrows/PageDown) on the layer while the home document is locked
-    useEffect(() => {
-        if (top && scrollRef.current) scrollRef.current.focus({ preventScroll: true });
-    }, [top]);
-
     return (
         <motion.div
             data-testid={`project-layer-${hero.slug}`}
@@ -86,7 +96,21 @@ function ProjectLayer({ layer, hero, data, reduced, top, onSwipeBack }) {
                 className="layer-scroll h-full overflow-y-auto focus:outline-none"
                 style={{ overscrollBehaviorX: "none" }}
             >
-                <ProjectDetail key={hero.slug} hero={hero} data={data} />
+                <div
+                    className="relative z-10 bg-cream"
+                    style={
+                        curtain
+                            ? {
+                                  marginBottom: footerH,
+                                  borderRadius: "0 0 2.5rem 2.5rem",
+                                  boxShadow: "0 60px 100px -30px rgba(20,28,22,0.55)",
+                              }
+                            : undefined
+                    }
+                >
+                    <ProjectDetail key={hero.slug} hero={hero} data={data} />
+                </div>
+                <Footer ref={footerRef} curtain={curtain} pathKey={layer.path} containerRef={scrollRef} />
             </div>
         </motion.div>
     );
@@ -365,6 +389,7 @@ export default function App() {
                         reduced={reduced}
                         top={i === layers.length - 1}
                         onSwipeBack={onSwipeBack}
+                        curtain={curtain}
                     />
                 );
             })}
