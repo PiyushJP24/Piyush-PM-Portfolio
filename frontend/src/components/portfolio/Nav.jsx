@@ -48,9 +48,9 @@ export default function Nav() {
                     onClick={(e) => go(e, "#home")}
                     data-cursor="Home"
                     data-testid="nav-logo"
-                    className="font-script text-2xl leading-none text-ink"
+                    className="whitespace-nowrap font-script text-xl leading-none text-ink sm:text-2xl"
                 >
-                    Piyush Paliwal
+                    Piyush Jairam Paliwal
                 </a>
                 <span className="hidden h-4 w-px bg-ink/15 md:block" aria-hidden="true" />
                 <div className="hidden items-center gap-6 md:flex">
