@@ -33,6 +33,8 @@ code {
 
 html { scrollbar-width: none; }
 ::-webkit-scrollbar { display: none; }
+.layer-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+.layer-scroll::-webkit-scrollbar { display: none; }
 
 @media (pointer: fine) {
     body, a, button, [data-cursor] { cursor: none; }

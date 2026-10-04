@@ -13,10 +13,73 @@ import Footer from "./components/portfolio/Footer";
 import ProjectDetail from "./components/portfolio/ProjectDetail";
 import Splash from "./components/portfolio/Splash";
 import ScrollIndicator from "./components/portfolio/ScrollIndicator";
-import { instantReveal } from "./components/portfolio/instant";
 import { detailPages } from "./data/details";
 import { projects } from "./data/projects";
 import { analysis } from "./data/analysis";
+
+const LAYER_EASE = [0.32, 0.72, 0, 1];
+const LAYER_TRANSITION = { duration: 0.5, ease: LAYER_EASE };
+
+function ProjectLayer({ layer, hero, data, reduced, top, onSwipeBack }) {
+    const scrollRef = useRef(null);
+
+    // while this is the top layer, its scroll container drives the scroll indicator
+    useEffect(() => {
+        if (!top || !scrollRef.current) return undefined;
+        const el = scrollRef.current;
+        window.__activeScroller = el;
+        window.dispatchEvent(new Event("pjp:scroller"));
+        return () => {
+            if (window.__activeScroller === el) {
+                window.__activeScroller = null;
+                window.dispatchEvent(new Event("pjp:scroller"));
+            }
+        };
+    }, [top]);
+
+    // trackpad two-finger swipe right -> back (deltaX negative under natural scrolling)
+    useEffect(() => {
+        const el = scrollRef.current;
+        if (!el || reduced) return undefined;
+        let acc = 0;
+        let last = 0;
+        let coolUntil = 0;
+        const onWheel = (e) => {
+            const now = performance.now();
+            if (now < coolUntil) return;
+            if (now - last > 250) acc = 0;
+            last = now;
+            if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+            if (e.deltaX < 0) {
+                acc += -e.deltaX;
+                if (acc >= 80) {
+                    acc = 0;
+                    coolUntil = now + 700;
+                    onSwipeBack();
+                }
+            } else {
+                acc = 0;
+            }
+        };
+        el.addEventListener("wheel", onWheel, { passive: true });
+        return () => el.removeEventListener("wheel", onWheel);
+    }, [reduced, onSwipeBack]);
+
+    return (
+        <motion.div
+            data-testid={`project-layer-${hero.slug}`}
+            className="fixed inset-0 z-40 bg-cream"
+            initial={reduced ? false : { x: "100%" }}
+            animate={{ x: layer.exiting ? "100%" : "0%" }}
+            transition={reduced ? { duration: 0 } : LAYER_TRANSITION}
+            style={{ boxShadow: "-28px 0 56px -16px rgba(20,28,22,0.4)" }}
+        >
+            <div ref={scrollRef} className="layer-scroll h-full overflow-y-auto" style={{ overscrollBehaviorX: "none" }}>
+                <ProjectDetail key={hero.slug} hero={hero} data={data} />
+            </div>
+        </motion.div>
+    );
+}
 
 export default function App() {
     const footerRef = useRef(null);
@@ -25,12 +88,17 @@ export default function App() {
     const reduced = useReducedMotion();
     const [splashDone, setSplashDone] = useState(() => sessionStorage.getItem("pjp_splash") === "1");
     const [path, setPath] = useState(() => window.location.pathname);
-    const [wipe, setWipe] = useState(0); // 0 parked, 1 covering, 2 covered, 3 revealing
-    const [backLeaving, setBackLeaving] = useState(null);
-    const wipingRef = useRef(false);
-    const restoreRef = useRef(false);
+    const [homeShown, setHomeShown] = useState(() => !window.location.pathname.startsWith("/work/"));
+    const [layers, setLayers] = useState([]);
     const heroPlayedRef = useRef(false);
-    const backNavRef = useRef(null);
+    const layersRef = useRef([]);
+    const homeShownRef = useRef(homeShown);
+    const reducedRef = useRef(reduced);
+    const layerIdRef = useRef(0);
+
+    layersRef.current = layers;
+    homeShownRef.current = homeShown;
+    reducedRef.current = reduced;
 
     const legacyFor = (h) => {
         const pair = (k) => (h.overview ? h.overview.find(([key]) => key === k) : null)?.[1] || "";
@@ -59,99 +127,128 @@ export default function App() {
         return d ? { hero: h, data: d } : null;
     };
     const cur = detailFor(path);
-    const detail = cur ? cur.hero : null;
+    const directDetail = !homeShown && cur ? cur : null;
 
-    const renderRoute = (p) => {
-        const d = detailFor(p);
-        if (d) return <ProjectDetail key={d.hero.slug} hero={d.hero} data={d.data} />;
-        return (
-            <>
-                <Hero start={splashDone} instant={heroPlayedRef.current} />
-                <Marquee />
-                <About />
-                <Projects />
-                <Experience />
-                <Tools />
-            </>
-        );
+    const removeExiting = () => {
+        setTimeout(() => setLayers((ls) => ls.filter((l) => !l.exiting)), reducedRef.current ? 0 : 520);
     };
-
-    const backNav = (newPath) => {
-        if (wipingRef.current) return;
-        wipingRef.current = true;
-        const saved = sessionStorage.getItem("pjp_home_scroll");
-        if (saved !== null && (newPath === "/" || newPath === "")) instantReveal.current = true;
-        if (!reduced) setBackLeaving({ route: window.location.pathname, y: window.scrollY });
-        restoreRef.current = true;
-        setPath(newPath);
-        setTimeout(() => {
-            setBackLeaving(null);
-            wipingRef.current = false;
-        }, reduced ? 250 : 620);
+    const closeTopLayer = () => {
+        const top = [...layersRef.current].reverse().find((l) => !l.exiting);
+        if (!top) return false;
+        setLayers((ls) => ls.map((l) => (l.id === top.id ? { ...l, exiting: true } : l)));
+        removeExiting();
+        return true;
     };
-    backNavRef.current = backNav;
+    const openLayer = (p) => {
+        const id = ++layerIdRef.current;
+        setLayers((ls) => [...ls.filter((l) => !l.exiting), { id, path: p, exiting: false }]);
+    };
 
     useEffect(() => {
         const onPop = () => {
-            if (wipingRef.current) return;
-            backNavRef.current(window.location.pathname);
+            const p = window.location.pathname;
+            const isWork = p.startsWith("/work/") && detailFor(p);
+            if (isWork) {
+                const open = layersRef.current.filter((l) => !l.exiting);
+                const idx = open.findIndex((l) => l.path === p);
+                if (idx >= 0 && idx < open.length - 1) {
+                    // back to an earlier project: close everything above it
+                    const closing = new Set(open.slice(idx + 1).map((l) => l.id));
+                    setLayers((ls) => ls.map((l) => (closing.has(l.id) ? { ...l, exiting: true } : l)));
+                    removeExiting();
+                } else if (idx === -1 && homeShownRef.current) {
+                    openLayer(p); // forward to a project
+                }
+            } else {
+                closeTopLayer(); // back home
+            }
+            setPath(p);
         };
         window.addEventListener("popstate", onPop);
         window.__navigate = (href) => {
-            if (wipingRef.current) return;
-            if ((window.location.pathname === "/" || window.location.pathname === "") && href.startsWith("/work/")) {
-                sessionStorage.setItem("pjp_home_scroll", String(window.scrollY));
-            }
-            wipingRef.current = true;
-            setWipe(1);
-            setTimeout(() => {
-                window.history.pushState({}, "", href);
-                setPath(href.split("#")[0] || "/");
-                setWipe(2);
-            }, 400);
-            setTimeout(() => setWipe(3), 430);
-            setTimeout(() => {
-                setWipe(0);
-                wipingRef.current = false;
-            }, 860);
+            const target = href.split("#")[0] || "/";
+            window.history.pushState({}, "", href);
+            if (target.startsWith("/work/") && homeShownRef.current && detailFor(target)) openLayer(target);
+            setPath(target);
         };
         window.__navigateBack = (href) => {
-            if (wipingRef.current) return;
+            const target = href.split("#")[0] || "/";
+            const hash = href.includes("#") ? href.slice(href.indexOf("#")) : "";
             window.history.pushState({}, "", href);
-            backNavRef.current(href.split("#")[0] || "/");
+            const closed = closeTopLayer();
+            setPath(target);
+            if (!closed && hash) {
+                // project opened directly by URL: home mounts fresh, jump to the section
+                const t = setTimeout(() => {
+                    const el = document.querySelector(hash);
+                    if (!el) return;
+                    if (window.__lenis) window.__lenis.scrollTo(el, { offset: -96, immediate: true });
+                    else el.scrollIntoView();
+                }, 400);
+                return () => clearTimeout(t);
+            }
+            return undefined;
+        };
+        window.__closeLayers = () => {
+            if (!layersRef.current.length) return false;
+            window.history.pushState({}, "", "/");
+            setLayers([]);
+            setPath("/");
+            document.documentElement.style.overflow = "";
+            document.documentElement.style.overscrollBehaviorX = "";
+            if (window.__lenis) window.__lenis.start();
+            return true;
         };
         return () => {
             window.removeEventListener("popstate", onPop);
             window.__navigate = null;
             window.__navigateBack = null;
+            window.__closeLayers = null;
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        if (!detail) heroPlayedRef.current = true;
-        if (restoreRef.current) {
-            restoreRef.current = false;
-            const saved = sessionStorage.getItem("pjp_home_scroll");
-            if (saved !== null) {
-                const y = parseFloat(saved);
-                if (window.__lenis) window.__lenis.scrollTo(y, { immediate: true });
-                else window.scrollTo(0, y);
-                return undefined;
-            }
-        }
+        if (!path.startsWith("/work/")) setHomeShown(true);
+    }, [path]);
+
+    useEffect(() => {
+        if (!cur) heroPlayedRef.current = true;
+    }, [cur]);
+
+    // direct-URL project pages scroll to top on change; the home page's scroll is never touched
+    useEffect(() => {
+        if (homeShown) return undefined;
         if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true });
         else window.scrollTo(0, 0);
-        if (!detail && window.location.hash) {
-            const t = setTimeout(() => {
-                const el = document.querySelector(window.location.hash);
-                if (!el) return;
-                if (window.__lenis) window.__lenis.scrollTo(el, { offset: -96, immediate: true });
-                else el.scrollIntoView();
-            }, 500);
-            return () => clearTimeout(t);
-        }
         return undefined;
-    }, [path, detail]);
+    }, [path, homeShown]);
+
+    // initial load with a hash (e.g. /#about)
+    useEffect(() => {
+        if (window.location.pathname.startsWith("/work/") || !window.location.hash) return undefined;
+        const t = setTimeout(() => {
+            const el = document.querySelector(window.location.hash);
+            if (!el) return;
+            if (window.__lenis) window.__lenis.scrollTo(el, { offset: -96, immediate: true });
+            else el.scrollIntoView();
+        }, 500);
+        return () => clearTimeout(t);
+    }, []);
+
+    // lock the home page's scroll (in place) while a layer is open
+    const layerOpen = layers.length > 0;
+    useEffect(() => {
+        if (!layerOpen) return undefined;
+        document.documentElement.style.overflow = "hidden";
+        document.documentElement.style.overscrollBehaviorX = "none";
+        if (window.__lenis) window.__lenis.stop();
+        return () => {
+            document.documentElement.style.overflow = "";
+            document.documentElement.style.overscrollBehaviorX = "";
+            if (window.__lenis) window.__lenis.start();
+        };
+    }, [layerOpen]);
 
     useEffect(() => {
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -193,54 +290,21 @@ export default function App() {
         setSplashDone(true);
     };
 
+    const onSwipeBack = () => {
+        const top = [...layersRef.current].reverse().find((l) => !l.exiting);
+        if (!top) return;
+        window.history.back();
+    };
+
+    const exiting = layers.some((l) => l.exiting);
+
     return (
         <MotionConfig reducedMotion="user">
             <div className="grain" aria-hidden="true" />
             <Cursor />
             <ScrollIndicator />
             <Nav />
-            <div
-                data-testid="page-wipe"
-                aria-hidden="true"
-                className="fixed inset-0 z-[9000] bg-pinedeep"
-                style={
-                    reduced
-                        ? {
-                              opacity: wipe === 1 || wipe === 2 ? 1 : 0,
-                              transition: "opacity 0.2s ease",
-                              pointerEvents: wipe ? "auto" : "none",
-                          }
-                        : {
-                              transform:
-                                  wipe === 0
-                                      ? "translateY(100%)"
-                                      : wipe === 3
-                                        ? "translateY(-100%)"
-                                        : "translateY(0%)",
-                              transition: wipe === 0 ? "none" : "transform 0.4s cubic-bezier(0.76, 0, 0.24, 1)",
-                              pointerEvents: wipe ? "auto" : "none",
-                          }
-                }
-            />
             <AnimatePresence>{!splashDone && <Splash key="splash" onDone={finishSplash} />}</AnimatePresence>
-            {backLeaving && !reduced && (
-                <motion.div
-                    key={`leaving-${backLeaving.route}`}
-                    data-testid="back-slide-layer"
-                    aria-hidden="true"
-                    className="fixed inset-0 z-[8000] overflow-hidden bg-cream"
-                    initial={{ y: 0 }}
-                    animate={{ y: "100%" }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    style={{
-                        borderRadius: "0 0 2.5rem 2.5rem",
-                        boxShadow: "0 -40px 80px -20px rgba(20,28,22,0.45)",
-                        pointerEvents: "none",
-                    }}
-                >
-                    <div style={{ transform: `translateY(${-backLeaving.y}px)` }}>{renderRoute(backLeaving.route)}</div>
-                </motion.div>
-            )}
             <main
                 className="relative z-10 bg-cream"
                 style={
@@ -253,14 +317,46 @@ export default function App() {
                         : undefined
                 }
             >
-                {reduced ? (
-                    <motion.div key={path} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }}>
-                        {renderRoute(path)}
-                    </motion.div>
+                {homeShown ? (
+                    <>
+                        <Hero start={splashDone} instant={heroPlayedRef.current} />
+                        <Marquee />
+                        <About />
+                        <Projects />
+                        <Experience />
+                        <Tools />
+                    </>
                 ) : (
-                    renderRoute(path)
+                    directDetail && (
+                        <ProjectDetail key={directDetail.hero.slug} hero={directDetail.hero} data={directDetail.data} />
+                    )
                 )}
             </main>
+            {exiting && !reduced && (
+                <motion.div
+                    data-testid="back-dim"
+                    aria-hidden="true"
+                    className="pointer-events-none fixed inset-0 z-30 bg-ink"
+                    initial={{ opacity: 0.15 }}
+                    animate={{ opacity: 0 }}
+                    transition={LAYER_TRANSITION}
+                />
+            )}
+            {layers.map((l, i) => {
+                const d = detailFor(l.path);
+                if (!d) return null;
+                return (
+                    <ProjectLayer
+                        key={l.id}
+                        layer={l}
+                        hero={d.hero}
+                        data={d.data}
+                        reduced={reduced}
+                        top={i === layers.length - 1}
+                        onSwipeBack={onSwipeBack}
+                    />
+                );
+            })}
             <Footer ref={footerRef} curtain={curtain} pathKey={path} />
         </MotionConfig>
     );

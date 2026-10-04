@@ -11,6 +11,7 @@ const links = [
 
 export function scrollToHash(e, hash) {
     e.preventDefault();
+    if (window.__closeLayers) window.__closeLayers();
     if (hash === "#connect") {
         const target = document.documentElement.scrollHeight;
         if (window.__lenis) window.__lenis.scrollTo(target);
