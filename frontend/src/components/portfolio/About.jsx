@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import SectionHead from "./SectionHead";
 import ResumeButton from "./ResumeButton";
 import { githubUrl, linkedinUrl } from "../../data/site";
+import { instantReveal } from "./instant";
 
 const facts = [
     ["Based in", "Gurgaon, India"],
@@ -11,13 +12,26 @@ const facts = [
 ];
 
 export default function About() {
+    const iv = instantReveal.current;
+    const figureMotion = iv
+        ? { initial: false, animate: { opacity: 1, y: 0 } }
+        : {
+              initial: { opacity: 0, y: 32 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, amount: 0.3 },
+          };
+    const bodyMotion = iv
+        ? { initial: false, animate: { opacity: 1, y: 0 } }
+        : {
+              initial: { opacity: 0, y: 24 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, amount: 0.4 },
+          };
     return (
         <section id="about" data-testid="about-section" className="mx-auto max-w-6xl px-6 py-28 md:py-36">
             <div className="grid items-center gap-14 md:grid-cols-[5fr_6fr]">
                 <motion.figure
-                    initial={{ opacity: 0, y: 32 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
+                    {...figureMotion}
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                     className="group relative overflow-hidden rounded-[2rem] border border-line bg-panel"
                     data-cursor="That's me"
@@ -45,12 +59,7 @@ export default function About() {
                             </>
                         }
                     />
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.4 }}
-                        transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-                    >
+                    <motion.div {...bodyMotion} transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}>
                         <p className="mt-6 text-sm leading-relaxed text-ink/80 md:text-base">
                             I&rsquo;m Piyush Jairam Paliwal — an MBA candidate with an engineering degree, and the kind
                             of PM who would rather prototype the idea than schedule a meeting about it.

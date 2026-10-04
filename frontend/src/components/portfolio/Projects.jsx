@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import SectionHead from "./SectionHead";
 import { projects } from "../../data/content";
 import { projects as detailProjects } from "../../data/projects";
+import { instantReveal } from "./instant";
 
 const tones = {
     ship: "bg-forest text-cream",
@@ -38,6 +39,7 @@ function tileData(p) {
 
 function ProjectCard({ p, i }) {
     const t = tileData(p);
+    const iv = instantReveal.current;
     return (
         <motion.a
             href={t.link}
@@ -51,8 +53,9 @@ function ProjectCard({ p, i }) {
                     if (window.__navigate) window.__navigate(t.link);
                 }
             }}
-            initial={{ opacity: 0, y: 36 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={iv ? false : { opacity: 0, y: 36 }}
+            whileInView={iv ? undefined : { opacity: 1, y: 0 }}
+            animate={iv ? { opacity: 1, y: 0 } : undefined}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.75, delay: (i % 2) * 0.12, ease: [0.22, 1, 0.36, 1] }}
             data-cursor="View Project"

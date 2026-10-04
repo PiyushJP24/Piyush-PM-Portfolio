@@ -38,10 +38,14 @@ export default function Splash({ onDone }) {
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     exit={reduced ? { opacity: 0 } : { opacity: 0, y: -10, filter: "blur(4px)" }}
                     transition={{ duration: reduced ? 0.3 : 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    className={`text-6xl text-forest md:text-7xl ${
-                        word === "नमस्ते" ? "font-medium" : "font-serifit italic"
+                    className={`text-forest ${
+                        word === "नमस्ते" ? "text-6xl font-medium md:text-7xl" : "font-script"
                     }`}
-                    style={word === "नमस्ते" ? { fontFamily: "system-ui, sans-serif" } : undefined}
+                    style={
+                        word === "नमस्ते"
+                            ? { fontFamily: "system-ui, sans-serif" }
+                            : { fontSize: "clamp(64px, 11vw, 150px)" }
+                    }
                 >
                     {reduced ? "Hello" : word}
                 </motion.span>

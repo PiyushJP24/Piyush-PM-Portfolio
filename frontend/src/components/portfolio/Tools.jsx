@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import SectionHead from "./SectionHead";
 import { analysisProjects, analysisViz, fluentIn, frameworks, tools } from "../../data/content";
 import { analysis } from "../../data/analysis";
+import { instantReveal } from "./instant";
 
 const rise = {
     initial: { opacity: 0, y: 24 },
@@ -11,6 +12,9 @@ const rise = {
     viewport: { once: true, amount: 0.3 },
     transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
 };
+
+const riseProps = () =>
+    instantReveal.current ? { initial: false, animate: { opacity: 1, y: 0 }, transition: rise.transition } : rise;
 
 const vizUrl = (title) => {
     const hit = analysis.visualisations.find((x) => x.title === title);
@@ -28,7 +32,7 @@ export default function Tools() {
                 desc="The stack I build with, and the mental models I lean on when the roadmap gets loud."
             />
 
-            <motion.div {...rise} className="mt-12 flex flex-wrap gap-3" data-testid="tools-tag-row">
+            <motion.div {...riseProps()} className="mt-12 flex flex-wrap gap-3" data-testid="tools-tag-row">
                 {tools.map((t) => (
                     <span
                         key={t}
@@ -39,14 +43,14 @@ export default function Tools() {
                 ))}
             </motion.div>
 
-            <motion.h3 {...rise} className="mt-20 text-xl font-semibold tracking-tight text-ink md:text-2xl">
+            <motion.h3 {...riseProps()} className="mt-20 text-xl font-semibold tracking-tight text-ink md:text-2xl">
                 How I <span className="font-serifit font-normal italic text-forest">think</span>
             </motion.h3>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {frameworks.map((f, i) => (
                     <motion.div
                         key={f.name}
-                        {...rise}
+                        {...riseProps()}
                         transition={{ ...rise.transition, delay: (i % 3) * 0.08 }}
                         data-testid={`framework-card-${i}`}
                         className="rounded-2xl border border-line bg-panel/70 p-6"
@@ -58,7 +62,7 @@ export default function Tools() {
                 ))}
             </div>
 
-            <motion.div {...rise} className="mt-16">
+            <motion.div {...riseProps()} className="mt-16">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-fog">Also fluent in</p>
                 <div className="mt-4 flex flex-wrap gap-2.5" data-testid="fluent-tag-row">
                     {fluentIn.map((t) => (
@@ -69,11 +73,11 @@ export default function Tools() {
                 </div>
             </motion.div>
 
-            <motion.h3 {...rise} className="mt-20 text-xl font-semibold tracking-tight text-ink md:text-2xl">
+            <motion.h3 {...riseProps()} className="mt-20 text-xl font-semibold tracking-tight text-ink md:text-2xl">
                 Supporting <span className="font-serifit font-normal italic text-forest">analysis</span>
             </motion.h3>
 
-            <motion.div {...rise} className="mt-8">
+            <motion.div {...riseProps()} className="mt-8">
                 <div data-testid="analysis-tabs" className="inline-flex rounded-full border border-line bg-panel p-1">
                     {[
                         ["projects", "Projects"],

@@ -84,7 +84,7 @@ export default function ProjectDetail({ hero, data }) {
                     href="/#work"
                     onClick={(e) => {
                         e.preventDefault();
-                        if (window.__navigate) window.__navigate("/#work");
+                        if (window.__navigateBack) window.__navigateBack("/#work");
                     }}
                     data-cursor="All Work"
                     data-testid="back-to-work-link"
