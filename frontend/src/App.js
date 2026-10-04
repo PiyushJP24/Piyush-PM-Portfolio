@@ -65,6 +65,11 @@ function ProjectLayer({ layer, hero, data, reduced, top, onSwipeBack }) {
         return () => el.removeEventListener("wheel", onWheel);
     }, [reduced, onSwipeBack]);
 
+    // keep keyboard scrolling (Space/arrows/PageDown) on the layer while the home document is locked
+    useEffect(() => {
+        if (top && scrollRef.current) scrollRef.current.focus({ preventScroll: true });
+    }, [top]);
+
     return (
         <motion.div
             data-testid={`project-layer-${hero.slug}`}
@@ -74,7 +79,13 @@ function ProjectLayer({ layer, hero, data, reduced, top, onSwipeBack }) {
             transition={reduced ? { duration: 0 } : LAYER_TRANSITION}
             style={{ boxShadow: "-28px 0 56px -16px rgba(20,28,22,0.4)" }}
         >
-            <div ref={scrollRef} className="layer-scroll h-full overflow-y-auto" style={{ overscrollBehaviorX: "none" }}>
+            <div
+                ref={scrollRef}
+                data-lenis-prevent
+                tabIndex={-1}
+                className="layer-scroll h-full overflow-y-auto focus:outline-none"
+                style={{ overscrollBehaviorX: "none" }}
+            >
                 <ProjectDetail key={hero.slug} hero={hero} data={data} />
             </div>
         </motion.div>
