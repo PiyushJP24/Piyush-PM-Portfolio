@@ -3,12 +3,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import SectionHead from "./SectionHead";
 import { analysisProjects, analysisViz, fluentIn, frameworks, tools } from "../../data/content";
+import { analysis } from "../../data/analysis";
 
 const rise = {
     initial: { opacity: 0, y: 24 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, amount: 0.3 },
     transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+};
+
+const vizUrl = (title) => {
+    const hit = analysis.visualisations.find((x) => x.title === title);
+    return hit ? hit.url : "";
 };
 
 export default function Tools() {
@@ -130,7 +136,15 @@ export default function Tools() {
                                         <a
                                             href={a.link}
                                             onClick={(e) => {
-                                                if (a.link === "#") e.preventDefault();
+                                                if (a.link === "#") {
+                                                    e.preventDefault();
+                                                    return;
+                                                }
+                                                if (a.link.startsWith("/")) {
+                                                    e.preventDefault();
+                                                    window.history.pushState({}, "", a.link);
+                                                    window.dispatchEvent(new Event("popstate"));
+                                                }
                                             }}
                                             data-cursor="Open"
                                             data-testid={`analysis-project-link-${i}`}
@@ -158,8 +172,9 @@ export default function Tools() {
                                 Explore my interactive Tableau dashboards and data visualisations
                             </p>
                             <a
-                                href="#"
-                                onClick={(e) => e.preventDefault()}
+                                href={analysis.tableauProfileUrl}
+                                target="_blank"
+                                rel="noreferrer"
                                 data-cursor="Tableau"
                                 data-testid="tableau-public-link"
                                 className="inline-flex items-center gap-1.5 rounded-full bg-forest px-5 py-2.5 text-xs font-medium text-cream transition-colors duration-300 hover:bg-ink"
@@ -182,9 +197,11 @@ export default function Tools() {
                                         <h4 className="text-base font-semibold text-ink">{v.title}</h4>
                                         <p className="mt-2 text-sm leading-relaxed text-fog">{v.caption}</p>
                                         <a
-                                            href={v.link}
+                                            href={vizUrl(v.title) || v.link}
+                                            target="_blank"
+                                            rel="noreferrer"
                                             onClick={(e) => {
-                                                if (v.link === "#") e.preventDefault();
+                                                if (!vizUrl(v.title) && v.link === "#") e.preventDefault();
                                             }}
                                             data-cursor="Open"
                                             data-testid={`analysis-viz-link-${i}`}

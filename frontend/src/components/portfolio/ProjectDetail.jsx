@@ -74,7 +74,9 @@ export default function ProjectDetail({ hero, data }) {
         ["Timeline", data.timeline],
         ["Outcome", data.outcome],
     ].filter(([, v]) => v);
-    const showActions = Boolean(data.liveUrl || data.docsUrl || (data.liveDisabled && data.liveLabel));
+    const showActions = Boolean(
+        data.liveUrl || data.docsUrl || (data.liveDisabled && data.liveLabel) || (data.githubUrl && data.githubLabel)
+    );
 
     return (
         <article data-testid={`${hero.slug}-detail`} className="mx-auto max-w-4xl px-6 pb-32 pt-32 md:pt-40">
@@ -156,6 +158,20 @@ export default function ProjectDetail({ hero, data }) {
                         >
                             <span className="fill-dot" aria-hidden="true" />
                             <span className="btn-label relative">{data.docsLabel || "Read the documentation"}</span>
+                            <ArrowUpRight size={15} className="btn-label relative" aria-hidden="true" />
+                        </a>
+                    )}
+                    {data.githubUrl && data.githubLabel && (
+                        <a
+                            href={data.githubUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            data-cursor="GitHub"
+                            data-testid="github-button"
+                            className={actionPill}
+                        >
+                            <span className="fill-dot" aria-hidden="true" />
+                            <span className="btn-label relative">{data.githubLabel}</span>
                             <ArrowUpRight size={15} className="btn-label relative" aria-hidden="true" />
                         </a>
                     )}

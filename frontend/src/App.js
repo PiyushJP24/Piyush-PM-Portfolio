@@ -13,6 +13,7 @@ import Footer from "./components/portfolio/Footer";
 import ProjectDetail from "./components/portfolio/ProjectDetail";
 import { detailPages } from "./data/details";
 import { projects } from "./data/projects";
+import { analysis } from "./data/analysis";
 
 export default function App() {
     const footerRef = useRef(null);
@@ -22,6 +23,9 @@ export default function App() {
     const slug = path.split("/")[2];
     const hero = path.startsWith("/work/") ? detailPages[slug] : null;
     const pair = (k) => (hero && hero.overview ? hero.overview.find(([key]) => key === k) : null)?.[1] || "";
+    const analysisEntry = hero
+        ? analysis.projects.find((a) => a.title === `${hero.titleMain} ${hero.titleAccent}`.trim())
+        : null;
     const legacyData =
         hero && !projects.find((p) => p.slug === slug)
             ? {
@@ -34,8 +38,10 @@ export default function App() {
                   stack: hero.stack,
                   takeaways: hero.takeaways,
                   liveUrl: "",
-                  github: "",
+                  docsUrl: "",
                   docs: [],
+                  githubUrl: (analysisEntry && analysisEntry.githubUrl) || "",
+                  githubLabel: (analysisEntry && analysisEntry.githubLabel) || "",
               }
             : null;
     const detailData = (hero && projects.find((p) => p.slug === slug)) || legacyData;
