@@ -108,7 +108,7 @@ export const experience = [
         desc: "Coursework spanning AI & MLOps for Managers and Platform/Ecosystem Strategy, plus case work on CRM frameworks and an AI chatbot (HubSpot/Motion), the product-adjacent side of a general management degree.",
     },
     {
-        years: "Dec 2025–ongoing",
+        years: "Nov 2025–Sep 2026",
         role: "AI PM Certification",
         org: "Masai School × IIT Roorkee",
         desc: "PM fundamentals and AI/LLM basics from a product manager's perspective: 8.9 CGPA in offline exams, 9/10 on the DecideAI (Netflix) capstone. Runs concurrently with the MBA.",

@@ -122,6 +122,7 @@ export default function App() {
     const [footerH, setFooterH] = useState(0);
     const reduced = useReducedMotion();
     const [splashDone, setSplashDone] = useState(() => sessionStorage.getItem("pjp_splash") === "1");
+    const [splashGone, setSplashGone] = useState(() => sessionStorage.getItem("pjp_splash") === "1");
     const [path, setPath] = useState(() => window.location.pathname);
     const [homeShown, setHomeShown] = useState(() => !window.location.pathname.startsWith("/work/"));
     const [layers, setLayers] = useState([]);
@@ -318,11 +319,12 @@ export default function App() {
         return () => ro.disconnect();
     }, []);
 
+    const revealSite = () => setSplashDone(true); // hero entrance starts as the splash fade begins
     const finishSplash = () => {
         document.documentElement.style.overflow = "";
         document.body.style.overflow = "";
         sessionStorage.setItem("pjp_splash", "1");
-        setSplashDone(true);
+        setSplashGone(true);
     };
 
     const onSwipeBack = () => {
@@ -339,7 +341,9 @@ export default function App() {
             <Cursor />
             <ScrollIndicator />
             <Nav />
-            <AnimatePresence>{!splashDone && <Splash key="splash" onDone={finishSplash} />}</AnimatePresence>
+            <AnimatePresence>
+                {!splashGone && <Splash key="splash" onReveal={revealSite} onDone={finishSplash} />}
+            </AnimatePresence>
             <main
                 className="relative z-10 bg-cream"
                 style={
