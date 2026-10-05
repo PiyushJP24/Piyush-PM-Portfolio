@@ -33,13 +33,13 @@ function Reveal({ p, t0, t1, curtain, className, children, testid }) {
     );
 }
 
-const Footer = forwardRef(function Footer({ curtain, pathKey, containerRef }, ref) {
+const Footer = forwardRef(function Footer({ curtain, pathKey, containerRef, inFlow }, ref) {
     const { scrollY } = useScroll(containerRef ? { container: containerRef } : undefined);
     const [range, setRange] = useState([0, 1]);
 
     useEffect(() => {
         const calc = () => {
-            const fh = ref.current ? ref.current.offsetHeight : 640;
+            const fh = ref && ref.current ? ref.current.offsetHeight : 640;
             const doc =
                 containerRef && containerRef.current
                     ? containerRef.current.scrollHeight
@@ -69,7 +69,7 @@ const Footer = forwardRef(function Footer({ curtain, pathKey, containerRef }, re
             id="connect"
             ref={ref}
             data-testid="connect-section"
-            className="overflow-hidden bg-pinedeep text-cream"
+            className={inFlow ? "bg-pinedeep text-cream" : "overflow-hidden bg-pinedeep text-cream"}
             style={curtain ? { position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 0 } : undefined}
         >
             <div className="mx-auto max-w-5xl px-6 pb-10 pt-24 text-center md:pt-28">
